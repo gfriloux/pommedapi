@@ -1,0 +1,27 @@
+Azy_Namespace Json;
+
+struct Pommedapi_Conf
+{
+   string host;
+   int port;
+};
+
+struct Query_Header
+{
+   string name;
+   string value;
+};
+
+struct Query_Expect
+{
+   int time;
+   int http_code;
+};
+
+struct Query
+{
+   string uri;
+   array<Query_Header> headers;
+   int timeout;
+   Query_Expect expect;
+};
