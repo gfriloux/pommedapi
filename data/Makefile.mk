@@ -22,3 +22,11 @@ cssdir = $(datarootdir)/pommedapi/css/
 css_DATA =                                                                     \
    data/html/data/css/bootstrap.min.css                                        \
    data/html/data/css/monokai-sublime.css
+
+fontsdir = $(datarootdir)/pommedapi/fonts/
+fonts_DATA =                                                                   \
+   data/html/data/fonts/glyphicons-halflings-regular.eot                       \
+   data/html/data/fonts/glyphicons-halflings-regular.svg                       \
+   data/html/data/fonts/glyphicons-halflings-regular.ttf                       \
+   data/html/data/fonts/glyphicons-halflings-regular.woff                      \
+   data/html/data/fonts/glyphicons-halflings-regular.woff2

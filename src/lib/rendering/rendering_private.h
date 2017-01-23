@@ -1,6 +1,7 @@
 #include <Rendering.h>
 #include <Template.h>
 #include <Gfile.h>
+#include <Expect.h>
 
 extern int _rendering_log_dom_global;
 

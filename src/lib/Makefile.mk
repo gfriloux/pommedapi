@@ -13,7 +13,8 @@ noinst_LTLIBRARIES = \
    src/lib/libhttp.la \
    src/lib/libtemplate.la \
    src/lib/libtest.la \
-   src/lib/librendering.la
+   src/lib/librendering.la \
+   src/lib/libexpect.la
 
 src_lib_libgfile_la_SOURCES = \
    src/lib/gfile/gfile_main.c \
@@ -73,4 +74,14 @@ src_lib_librendering_la_LDFLAGS = $(POMMEDAPI_LIBS)
 src_lib_librendering_la_LIBADD = \
    src/lib/libtest.la \
    src/lib/libtemplate.la \
-   src/lib/libgfile.la
+   src/lib/libgfile.la \
+   src/lib/libexpect.la
+
+src_lib_libexpect_la_SOURCES = \
+   src/lib/expect/expect_main.c \
+   src/lib/expect/expect_private.h \
+   src/include/Expect.h
+src_lib_libexpect_la_CFLAGS = $(POMMEDAPI_CFLAGS) $(AM_CPPFLAGS)
+src_lib_libexpect_la_LDFLAGS = $(POMMEDAPI_LIBS)
+src_lib_libexpect_la_LIBADD = \
+   src/lib/libtest.la

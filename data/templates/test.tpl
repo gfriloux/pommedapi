@@ -1,18 +1,30 @@
 <div class="panel panel-primary">
   <div class="panel-heading">
-    <h3 class="panel-title">$$URL$$</h3>
+    <h3 class="panel-title">$$ID$$ - $$URL$$</h3>
   </div>
   <div class="panel-body">
-    $$CODE$$  $$LATENCY$$  $$SIZE$$
+    $$CODE$$
 
-    <div class="use_slide">
-    <pre><code class="json">
-      $$QUERY$$
-    </code></pre>
+    $$LATENCY$$
 
-    <pre><code class="json">
-       $$RESULT$$
-    </code></pre>
+    $$SIZE$$
+
+    <br /><br />
+    <ul class="nav nav-tabs">
+      <li class="active"><a href="#$$ID$$_desc" data-toggle="tab" aria-expanded="true">Description</a></li>
+      <li class=""><a href="#$$ID$$_sent" data-toggle="tab" aria-expanded="false">Sent data</a></li>
+      <li class=""><a href="#$$ID$$_received" data-toggle="tab" aria-expanded="false">Received data</a></li>
+    </ul>
+    <div id="myTabContent" class="tab-content">
+      <div class="tab-pane fade active in" id="$$ID$$_desc">
+        $$DESCRIPTION$$
+      </div>
+      <div class="tab-pane fade in" id="$$ID$$_sent">
+        <pre><code class="json">$$QUERY$$</code></pre>
+      </div>
+      <div class="tab-pane fade in" id="$$ID$$_received">
+        <pre><code class="json">$$RESULT$$</code></pre>
+      </div>
     </div>
   </div>
 </div>

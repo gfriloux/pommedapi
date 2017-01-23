@@ -135,8 +135,16 @@ rendering_init(
         goto unregister_log_domain;
      }
 
+   if (!expect_init())
+     {
+        EINA_LOG_ERR("Expect can not initialize Expect");
+        goto shutdown_expect;
+     }
+
    return _rendering_init_count;
 
+shutdown_expect:
+   expect_shutdown();
 unregister_log_domain:
    eina_log_domain_unregister(_rendering_log_dom_global);
    _rendering_log_dom_global = -1;
@@ -158,6 +166,7 @@ rendering_shutdown(
    if (--_rendering_init_count != 0)
      return _rendering_init_count;
 
+   expect_shutdown();
    template_shutdown();
 
    eina_log_domain_unregister(_rendering_log_dom_global);

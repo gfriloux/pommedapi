@@ -55,6 +55,9 @@ rendering_copy(
    ret = _rendering_copy_create_dir(r->dir, "/data/css/");
    EINA_SAFETY_ON_TRUE_RETURN_VAL(!ret, EINA_FALSE);
 
+   ret = _rendering_copy_create_dir(r->dir, "/data/fonts/");
+   EINA_SAFETY_ON_TRUE_RETURN_VAL(!ret, EINA_FALSE);
+
    ret = _rendering_copy_file(DATA_DIR"/pommedapi/js/bootstrap.min.js"  , r->dir, "data/js/" , "bootstrap.min.js");
    EINA_SAFETY_ON_TRUE_RETURN_VAL(!ret, EINA_FALSE);
 
@@ -68,6 +71,21 @@ rendering_copy(
    EINA_SAFETY_ON_TRUE_RETURN_VAL(!ret, EINA_FALSE);
 
    ret = _rendering_copy_file(DATA_DIR"/pommedapi/css/monokai-sublime.css", r->dir, "data/css/", "monokai-sublime.css");
+   EINA_SAFETY_ON_TRUE_RETURN_VAL(!ret, EINA_FALSE);
+
+   ret = _rendering_copy_file(DATA_DIR"/pommedapi/fonts/glyphicons-halflings-regular.eot", r->dir, "data/fonts/", "glyphicons-halflings-regular.eot");
+   EINA_SAFETY_ON_TRUE_RETURN_VAL(!ret, EINA_FALSE);
+
+   ret = _rendering_copy_file(DATA_DIR"/pommedapi/fonts/glyphicons-halflings-regular.svg", r->dir, "data/fonts/", "glyphicons-halflings-regular.svg");
+   EINA_SAFETY_ON_TRUE_RETURN_VAL(!ret, EINA_FALSE);
+
+   ret = _rendering_copy_file(DATA_DIR"/pommedapi/fonts/glyphicons-halflings-regular.ttf", r->dir, "data/fonts/", "glyphicons-halflings-regular.ttf");
+   EINA_SAFETY_ON_TRUE_RETURN_VAL(!ret, EINA_FALSE);
+
+   ret = _rendering_copy_file(DATA_DIR"/pommedapi/fonts/glyphicons-halflings-regular.woff", r->dir, "data/fonts/", "glyphicons-halflings-regular.woff");
+   EINA_SAFETY_ON_TRUE_RETURN_VAL(!ret, EINA_FALSE);
+
+   ret = _rendering_copy_file(DATA_DIR"/pommedapi/fonts/glyphicons-halflings-regular.woff2", r->dir, "data/fonts/", "glyphicons-halflings-regular.woff2");
    EINA_SAFETY_ON_TRUE_RETURN_VAL(!ret, EINA_FALSE);
 
    return EINA_TRUE;

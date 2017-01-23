@@ -21,6 +21,7 @@ struct Query_Expect
 struct Query
 {
    string uri;
+   string description;
    array<Query_Header> headers;
    int timeout;
    Query_Expect expect;
