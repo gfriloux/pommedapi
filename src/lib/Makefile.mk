@@ -65,6 +65,7 @@ src_lib_libtest_la_LIBADD = \
 src_lib_librendering_la_SOURCES = \
    src/lib/rendering/rendering_main.c \
    src/lib/rendering/rendering_test.c \
+   src/lib/rendering/rendering_stats.c \
    src/lib/rendering/rendering_copy.c \
    src/lib/rendering/rendering_utils.c \
    src/lib/rendering/rendering_private.h \

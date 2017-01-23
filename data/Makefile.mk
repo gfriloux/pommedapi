@@ -4,13 +4,20 @@ EXTRA_DIST +=                                                                  \
    data/html/data/js/bootstrap.min.js                                          \
    data/html/data/js/jquery.min.js                                             \
    data/html/data/js/highlight.min.js                                          \
+   data/html/data/fonts/glyphicons-halflings-regular.eot                       \
+   data/html/data/fonts/glyphicons-halflings-regular.svg                       \
+   data/html/data/fonts/glyphicons-halflings-regular.ttf                       \
+   data/html/data/fonts/glyphicons-halflings-regular.woff                      \
+   data/html/data/fonts/glyphicons-halflings-regular.woff2                     \
    data/templates/output.tpl                                                   \
-   data/templates/test.tpl
+   data/templates/test.tpl                                                     \
+   data/templates/stats.tpl
 
 tpldir = $(datarootdir)/pommedapi/templates/
 tpl_DATA =                                                                     \
    data/templates/output.tpl                                                   \
-   data/templates/test.tpl
+   data/templates/test.tpl                                                     \
+   data/templates/stats.tpl
 
 jsdir = $(datarootdir)/pommedapi/js/
 js_DATA =                                                                      \

@@ -77,7 +77,7 @@ rendering_test_code(
         eina_strbuf_append(buf, "btn-danger");
      }
 
-   eina_strbuf_append(buf, " btn-lg\">");
+   eina_strbuf_append(buf, " btn-xs\">");
    eina_strbuf_append(buf, "<span class=\"glyphicon glyphicon-record\" aria-hidden=\"true\"></span>");
    eina_strbuf_append_printf(buf, "&nbsp;%i", t->result.code);
    eina_strbuf_append(buf, "</button>");
@@ -114,8 +114,8 @@ rendering_test_latency(
         eina_strbuf_append(buf, "btn-warning");
      }
 
-   eina_strbuf_append(buf, " btn-lg\">");
-   eina_strbuf_append(buf, "<span class=\"glyphicon glyphicon-time\" aria-hidden=\"true\"></span>");
+   eina_strbuf_append(buf, " btn-xs\">");
+   eina_strbuf_append(buf, "<span class=\"glyphicon glyphicon-hourglass\" aria-hidden=\"true\"></span>");
    eina_strbuf_append_printf(buf, "&nbsp;%.02fms", t->result.latency);
    eina_strbuf_append(buf, "</button>");
 
@@ -138,7 +138,7 @@ rendering_test_size(
    buf = eina_strbuf_new();
    EINA_SAFETY_ON_NULL_RETURN_VAL(buf, NULL);
 
-   eina_strbuf_append(buf, "<button type=\"button\" class=\"btn btn-success btn-lg\">");
+   eina_strbuf_append(buf, "<button type=\"button\" class=\"btn btn-success btn-xs\">");
    eina_strbuf_append(buf, "<span class=\"glyphicon glyphicon-download\" aria-hidden=\"true\"></span>");
    eina_strbuf_append_printf(buf, "&nbsp;%zu bytes", eina_strbuf_length_get(t->result.data.buf));
    eina_strbuf_append(buf, "</button>");

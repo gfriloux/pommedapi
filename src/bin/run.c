@@ -41,7 +41,7 @@ begin:
         return;
      }
 
-   _EINA_LIST_PREPEND(p->tests.render, p->current);
+   _EINA_LIST_APPEND(p->tests.render, p->current);
 
    r = test_run(p->current, run_done, run_error, p);
    EINA_SAFETY_ON_TRUE_GOTO(!r, begin);

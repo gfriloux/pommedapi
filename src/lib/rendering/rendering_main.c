@@ -22,6 +22,7 @@ rendering_output(
    Template *tpl;
    Eina_Strbuf *buf;
    const char *s,
+              *c,
               *p;
    Eina_Bool ret;
 
@@ -42,10 +43,15 @@ end_loop:
    s = eina_strbuf_string_steal(r->buf);
    EINA_SAFETY_ON_NULL_GOTO(s, free_tpl);
 
+   c = rendering_stats(r, tests, DATA_DIR"/pommedapi/templates/stats.tpl");
+   EINA_SAFETY_ON_NULL_GOTO(c, free_s);
+
    template_function_add(tpl, "$$TESTS$$", _rendering_output_strdup, (void *)s);
+   template_function_add(tpl, "$$STATS$$", _rendering_output_strdup, (void *)c);
 
    p = template_parse(tpl);
-   free((char *)s);
+   free((char *)s); s = NULL;
+   free((char *)c); c = NULL;
    EINA_SAFETY_ON_NULL_GOTO(p, free_tpl);
 
    DBG("%s", p);
@@ -54,13 +60,16 @@ end_loop:
    EINA_SAFETY_ON_NULL_GOTO(s, free_p);
 
    ret = gfile_data_write(s, (char *)p, strlen(p));
-   free((char *)p);
+   free((char *)p); p = NULL;
    EINA_SAFETY_ON_TRUE_GOTO(!ret, free_tpl);
 
    return rendering_copy(r);
 
 free_p:
    free((char *)p);
+   free((char *)c);
+free_s:
+   free((char *)s);
 free_tpl:
    template_free(tpl);
    return EINA_FALSE;

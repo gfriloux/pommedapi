@@ -1,5 +1,18 @@
 #include "pommedapi.h"
 
+int
+_list_sort(
+   const void *d1,
+   const void *d2)
+{
+   Test *t1 = (void *)d1,
+        *t2 = (void *)d2;
+
+   if(!t1) return(1);
+   if(!t2) return(-1);
+   return(strcmp(t1->query.path + t1->query.name_start, t2->query.path + t2->query.name_start));
+}
+
 Eina_Bool
 list_filter(
    void *data,
@@ -34,6 +47,9 @@ list_done(
 {
    Pommedapi *p = data;
    DBG("p[%p] : Starting %d tests", eina_list_count(p->tests.pending), p);
+
+   p->tests.pending = eina_list_sort(p->tests.pending, eina_list_count(p->tests.pending), _list_sort);
+
    run_next(p);
 }
 

@@ -19,6 +19,7 @@ char * rendering_test_query(void *data);
 char * rendering_test_result(void *data);
 
 const char * rendering_test(Rendering *r, Test *t, const char *file);
+const char * rendering_stats(Rendering *r, Eina_List *tests, const char *file);
 Eina_Bool rendering_copy(Rendering *r);
 
 char * rendering_utils_strdupf(const char *s, ...);

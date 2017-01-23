@@ -23,6 +23,8 @@
     </nav>
 
     <div class="content">
+      $$STATS$$
+
       $$TESTS$$
     </div>
   </body>

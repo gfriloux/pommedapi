@@ -6,6 +6,8 @@ int        _expect_log_dom_global = -1;
 Expect_Level
 expect_test_latency(Test *t)
 {
+   if (!t->conf->expect->time) return EXPECT_SUCCESS;
+
    if (t->conf->expect->time > t->result.latency)
      return EXPECT_SUCCESS;
    return EXPECT_WARNING;
@@ -14,6 +16,8 @@ expect_test_latency(Test *t)
 Expect_Level
 expect_test_http_code(Test *t)
 {
+   if (!t->conf->expect->http_code) return EXPECT_SUCCESS;
+
    if (t->conf->expect->http_code == t->result.code)
      return EXPECT_SUCCESS;
 
@@ -21,6 +25,21 @@ expect_test_http_code(Test *t)
      return EXPECT_WARNING;
 
    return EXPECT_DANGER;
+}
+
+Expect_Level
+expect_test(Test *t)
+{
+   Expect_Level level = EXPECT_SUCCESS,
+                test;
+
+   test = expect_test_http_code(t);
+   if (level < test) level = test;
+
+   test = expect_test_latency(t);
+   if (level < test) level = test;
+
+   return level;
 }
 
 int

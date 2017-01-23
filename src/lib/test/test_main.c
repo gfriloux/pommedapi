@@ -120,7 +120,7 @@ test_init(
         return --_test_init_count;
      }
 
-   _test_log_dom_global = eina_log_domain_register("Test", EINA_COLOR_YELLOW);
+   _test_log_dom_global = eina_log_domain_register("test", EINA_COLOR_YELLOW);
    if (_test_log_dom_global < 0)
      {
         EINA_LOG_ERR("Test can not create a general log domain.");
