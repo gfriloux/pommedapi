@@ -1,10 +1,10 @@
 #define _GNU_SOURCE
 #include <stdio.h>
 
-#include "pommedapi.h"
+#include "rendering_private.h"
 
 char *
-utils_strdupf(
+rendering_utils_strdupf(
    const char *s,
    ...)
 {
@@ -19,3 +19,4 @@ utils_strdupf(
    EINA_SAFETY_ON_TRUE_RETURN_VAL(len == -1, NULL);
    return str;
 }
+

@@ -1,10 +1,10 @@
 #define _GNU_SOURCE
 #include <stdio.h>
 
-#include "pommedapi.h"
+#include "test_private.h"
 
 char *
-utils_strdupf(
+test_utils_strdupf(
    const char *s,
    ...)
 {
@@ -19,3 +19,14 @@ utils_strdupf(
    EINA_SAFETY_ON_TRUE_RETURN_VAL(len == -1, NULL);
    return str;
 }
+
+float
+test_utils_difftime(
+   struct timeval start,
+   struct timeval end)
+{
+   return (end.tv_sec  - start.tv_sec ) * 1000.0f +
+          (end.tv_usec - start.tv_usec) / 1000.0f;
+}
+
+

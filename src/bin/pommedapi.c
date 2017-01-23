@@ -1,38 +1,50 @@
 #include "pommedapi.h"
 
 void
-pommedapi_free(Pommedapi *p)
+pommedapi_free(
+   Pommedapi *p)
 {
-   free((char *)p->path.testdir);
+   free((char *)p->path.test);
+   free((char *)p->path.html);
    free((char *)p->path.conf);
    serialize_free(p->conf, SERIALIZATION_POMMEDAPI_CONF);
+   rendering_free(p->rendering);
    free(p);
 }
 
 Pommedapi *
-pommedapi_new(const char *testdir)
+pommedapi_new(
+   const char *test,
+   const char *html)
 {
    Pommedapi *p;
    size_t l;
 
-   EINA_SAFETY_ON_NULL_RETURN_VAL(testdir, NULL);
+   EINA_SAFETY_ON_NULL_RETURN_VAL(test, NULL);
+   EINA_SAFETY_ON_NULL_RETURN_VAL(html, NULL);
 
-   l = strlen(testdir);
+   l = strlen(test);
 
    p = calloc(1, sizeof(Pommedapi));
    EINA_SAFETY_ON_NULL_RETURN_VAL(p, NULL);
 
-   p->path.testdir = strdup(testdir);
-   EINA_SAFETY_ON_NULL_GOTO(p->path.testdir, free_p);
+   p->path.test = strdup(test);
+   EINA_SAFETY_ON_NULL_GOTO(p->path.test, free_p);
+
+   p->path.html = strdup(html);
+   EINA_SAFETY_ON_NULL_GOTO(p->path.html, free_p);
 
    p->path.conf = utils_strdupf("%s%spommedapi.conf",
-                                testdir, testdir[l] == '/' ? "" : "/");
+                                test, test[l] == '/' ? "" : "/");
    EINA_SAFETY_ON_NULL_GOTO(p->path.conf, free_p);
 
-   DBG("p->path.testdir[%s] p->path.conf[%s]", p->path.testdir, p->path.conf);
+   DBG("p->path.test[%s] p->path.conf[%s]", p->path.test, p->path.conf);
 
    p->conf = serialize_file_to_struct(p->path.conf, SERIALIZATION_POMMEDAPI_CONF);
    EINA_SAFETY_ON_NULL_GOTO(p->conf, free_p);
+
+   p->rendering = rendering_new(html);
+   EINA_SAFETY_ON_NULL_GOTO(p->rendering, free_p);
 
    return p;
 

@@ -105,3 +105,23 @@ gfile_strndup(
    return (char*)memcpy(p, s, l);
 }
 #endif
+
+Eina_Bool
+gfile_copy(
+   const char *src,
+   const char *dest)
+{
+   Eina_Bool r;
+   char *s;
+   size_t size;
+
+   s = gfile_data_read(src, &size);
+   EINA_SAFETY_ON_NULL_RETURN_VAL(s, EINA_FALSE);
+
+   r = gfile_data_write(dest, s, size);
+   free(s);
+   EINA_SAFETY_ON_FALSE_RETURN_VAL(r, EINA_FALSE);
+
+   return EINA_TRUE;
+}
+

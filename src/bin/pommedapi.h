@@ -6,57 +6,32 @@
 #include <Ecore.h>
 #include <Ecore_Getopt.h>
 #include <Eio.h>
-#include <Gfile.h>
 #include <Serialize.h>
 #include <Http.h>
+#include <Test.h>
+#include <Generic.h>
+#include <Rendering.h>
 
 typedef struct _Pommedapi
 {
    Json_Pommedapi_Conf *conf;
+   Rendering *rendering;
 
    struct
    {
-      char *testdir,
+      char *test,
+           *html,
            *conf;
    } path;
 
-   Eina_List *tests;
+   Test *current;
+
+   struct
+   {
+      Eina_List *pending,
+                *render;
+   } tests;
 } Pommedapi;
-
-typedef struct _Pommedapi_Test
-{
-   Pommedapi *p;
-   const char *path,
-              *query;
-   unsigned int name_start;
-
-   struct
-   {
-      char *data;
-      size_t len;
-   } post_data;
-
-   struct
-   {
-      struct timeval start,
-                     stop;
-      float latency;
-   } perf;
-
-   struct
-   {
-      int code;
-      Eina_Strbuf *data;
-   } result;
-
-   Json_Query *conf;
-   Eina_List *headers;
-} Pommedapi_Test;
-
-#define _EINA_LIST_APPEND(_a, _b)  _a = eina_list_append(_a, _b)
-#define _EINA_LIST_PREPEND(_a, _b) _a = eina_list_prepend(_a, _b)
-#define _EINA_LIST_REMOVE(_a, _b)  _a = eina_list_remove(_a, _b)
-#define _EINA_LIST_POP(_a)         _eina_list_pop(&_a)
 
 extern int _pommedapi_log_dom_global;
 
@@ -66,31 +41,14 @@ extern int _pommedapi_log_dom_global;
 #define WRN(...) EINA_LOG_DOM_WARN(_pommedapi_log_dom_global, __VA_ARGS__)
 #define CRI(...) EINA_LOG_DOM_CRIT(_pommedapi_log_dom_global, __VA_ARGS__)
 
-static inline void *
-_eina_list_pop(Eina_List **l)
-{
-   void *data;
-
-   data = eina_list_nth(*l, 0);
-   _EINA_LIST_REMOVE(*l, data);
-   return data;
-}
-
-Pommedapi * pommedapi_new(const char *testdir);
+Pommedapi * pommedapi_new(const char *test, const char *html);
 void pommedapi_free(Pommedapi *p);
 
-Pommedapi_Test * test_new(Pommedapi *p, const Eina_File_Direct_Info *info);
-void test_free(Pommedapi_Test *pt);
-void test_run(Pommedapi *p);
+Eina_Bool list_filter(void *data, Eio_File *handler, const Eina_File_Direct_Info *info);
+void list_main(void *data, Eio_File *handler, const Eina_File_Direct_Info *info);
+void list_done(void *data, Eio_File *handler);
+void list_error(void *data, Eio_File *handler, int error);
 
-Eina_Bool test_list_filter(void *data, Eio_File *handler, const Eina_File_Direct_Info *info);
-void test_list_main(void *data, Eio_File *handler, const Eina_File_Direct_Info *info);
-void test_list_done(void *data, Eio_File *handler);
-void test_list_error(void *data, Eio_File *handler, int error);
-
-void test_query_progress(void *data, char *url_data, size_t url_size);
-void test_query_done(void *data, Http *http);
-void test_query_error(void *data, const char *error);
+void run_next(Pommedapi *p);
 
 char * utils_strdupf(const char *s, ...);
-float utils_difftime(struct timeval start, struct timeval end);

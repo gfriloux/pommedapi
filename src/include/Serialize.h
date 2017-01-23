@@ -1,6 +1,8 @@
-#include <stddef.h>
-#include <Eina.h>
-#include <Json_Common_Azy.h>
+#ifndef SERIALIZE_H
+#define SERIALIZE_H
+# include <stddef.h>
+# include <Eina.h>
+# include <Json_Common_Azy.h>
 
 typedef enum _Serialization_Type
 {
@@ -19,3 +21,4 @@ Eina_Bool serialize_struct_to_file(void *data, const char *file, Serialization_T
 void * serialize_file_to_struct(const char *file, Serialization_Type type);
 
 void serialize_free(void *data, Serialization_Type type);
+#endif

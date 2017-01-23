@@ -40,6 +40,7 @@ DISTCLEANFILES =
 EXTRA_DIST =
 BUILT_SOURCES =
 
+include data/Makefile.mk
 include src/lib/Makefile.mk
 include src/bin/Makefile.mk
 
