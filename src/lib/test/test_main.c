@@ -19,6 +19,12 @@ test_run(
    tr = test_run_new(t, done, error, data);
    EINA_SAFETY_ON_NULL_RETURN_VAL(tr, EINA_FALSE);
 
+   if (tr->t->conf->disabled)
+     {
+        tr->cb.done(tr->cb.data, tr->t);
+        return EINA_TRUE;
+     }
+
    gettimeofday(&t->query.time, 0);
 
    if (t->query.data.data)

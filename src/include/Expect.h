@@ -4,7 +4,8 @@ typedef enum _Expect_Level
 {
    EXPECT_SUCCESS,
    EXPECT_WARNING,
-   EXPECT_DANGER
+   EXPECT_DANGER,
+   EXPECT_DISABLE
 } Expect_Level;
 
 int expect_init(void);

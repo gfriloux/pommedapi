@@ -6,6 +6,7 @@ int        _expect_log_dom_global = -1;
 Expect_Level
 expect_test_latency(Test *t)
 {
+   if (t->conf->disabled) return EXPECT_DISABLE;
    if (!t->conf->expect->time) return EXPECT_SUCCESS;
 
    if (t->conf->expect->time > t->result.latency)
@@ -16,6 +17,7 @@ expect_test_latency(Test *t)
 Expect_Level
 expect_test_http_code(Test *t)
 {
+   if (t->conf->disabled) return EXPECT_DISABLE;
    if (!t->conf->expect->http_code) return EXPECT_SUCCESS;
 
    if (t->conf->expect->http_code == t->result.code)
@@ -32,6 +34,8 @@ expect_test(Test *t)
 {
    Expect_Level level = EXPECT_SUCCESS,
                 test;
+
+   if (t->conf->disabled) return EXPECT_DISABLE;
 
    test = expect_test_http_code(t);
    if (level < test) level = test;

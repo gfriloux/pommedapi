@@ -1,4 +1,4 @@
-<div class="panel panel-primary">
+<div class="panel panel-$$DISABLE$$">
   <div class="panel-heading">
     <h3 class="panel-title">$$ID$$ - $$URL$$</h3>
   </div>

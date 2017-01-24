@@ -1,6 +1,16 @@
 #include "rendering_private.h"
 
 char *
+rendering_test_disable(
+   void *data)
+{
+   Test *t = data;
+
+   if (t->conf->disabled) return strdup("default");
+   return strdup("primary");
+}
+
+char *
 rendering_test_description(
    void *data)
 {
@@ -66,6 +76,9 @@ rendering_test_code(
    level = expect_test_http_code(t);
    switch (level)
      {
+      case EXPECT_DISABLE:
+        eina_strbuf_append(buf, "btn-default");
+        break;
       case EXPECT_SUCCESS:
         eina_strbuf_append(buf, "btn-success");
         break;
@@ -107,6 +120,9 @@ rendering_test_latency(
    level = expect_test_latency(t);
    switch (level)
      {
+      case EXPECT_DISABLE:
+        eina_strbuf_append(buf, "btn-default");
+        break;
       case EXPECT_SUCCESS:
         eina_strbuf_append(buf, "btn-success");
         break;
@@ -138,7 +154,8 @@ rendering_test_size(
    buf = eina_strbuf_new();
    EINA_SAFETY_ON_NULL_RETURN_VAL(buf, NULL);
 
-   eina_strbuf_append(buf, "<button type=\"button\" class=\"btn btn-success btn-xs\">");
+   eina_strbuf_append(buf, "<button type=\"button\" class=\"btn ");
+   eina_strbuf_append_printf(buf, "%s btn-xs\">", (t->conf->disabled) ? "btn-default" : "btn-success");
    eina_strbuf_append(buf, "<span class=\"glyphicon glyphicon-download\" aria-hidden=\"true\"></span>");
    eina_strbuf_append_printf(buf, "&nbsp;%zu bytes", eina_strbuf_length_get(t->result.data.buf));
    eina_strbuf_append(buf, "</button>");
@@ -189,6 +206,7 @@ rendering_test(
    template_function_add(tpl, "$$RESULT$$"     , rendering_test_result     , t);
    template_function_add(tpl, "$$ID$$"         , rendering_test_id         , t);
    template_function_add(tpl, "$$DESCRIPTION$$", rendering_test_description, t);
+   template_function_add(tpl, "$$DISABLE$$"    , rendering_test_disable    , t);
 
    s = template_parse(tpl);
 

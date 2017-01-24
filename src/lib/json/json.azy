@@ -22,6 +22,7 @@ struct Query
 {
    string uri;
    string description;
+   boolean disabled;
    array<Query_Header> headers;
    int timeout;
    Query_Expect expect;

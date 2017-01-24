@@ -42,6 +42,20 @@ rendering_stats_danger_count(
    return rendering_utils_strdupf("%u", danger);
 }
 
+char *
+rendering_stats_disable_count(
+   void *data)
+{
+   Eina_List *tests = data,
+             *l;
+   Test *t;
+   unsigned int disabled = 0;
+
+   EINA_LIST_FOREACH(tests, l, t)
+     if (expect_test(t) == EXPECT_DISABLE) disabled++;
+   return rendering_utils_strdupf("%u", disabled);
+}
+
 const char *
 rendering_stats(
    Rendering *r,
@@ -59,6 +73,7 @@ rendering_stats(
    template_function_add(tpl, "$$STAT_SUCCESS$$", rendering_stats_success_count, tests);
    template_function_add(tpl, "$$STAT_WARNING$$", rendering_stats_warning_count, tests);
    template_function_add(tpl, "$$STAT_DANGER$$" , rendering_stats_danger_count , tests);
+   template_function_add(tpl, "$$STAT_DISABLE$$", rendering_stats_disable_count, tests);
 
    s = template_parse(tpl);
 
