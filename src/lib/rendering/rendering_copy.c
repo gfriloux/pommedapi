@@ -8,6 +8,7 @@ _rendering_copy_file(
    const char *filename)
 {
    char *s;
+   Eina_Bool r;
 
    s = rendering_utils_strdupf("%s/%s", dst, padding);
    EINA_SAFETY_ON_NULL_RETURN_VAL(s, EINA_FALSE);
@@ -20,7 +21,9 @@ _rendering_copy_file(
    EINA_SAFETY_ON_NULL_RETURN_VAL(s, EINA_FALSE);
 
    DBG("Copy [%s] to [%s]", src, s);
-   return gfile_copy(src, s);
+   r = gfile_copy(src, s);
+   free(s);
+   return r;
 }
 
 Eina_Bool

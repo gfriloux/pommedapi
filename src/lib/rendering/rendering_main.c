@@ -61,8 +61,10 @@ end_loop:
 
    ret = gfile_data_write(s, (char *)p, strlen(p));
    free((char *)p); p = NULL;
+   free((char *)s);
    EINA_SAFETY_ON_TRUE_GOTO(!ret, free_tpl);
 
+   template_free(tpl);
    return rendering_copy(r);
 
 free_p:
@@ -81,6 +83,7 @@ rendering_free(
 {
    EINA_SAFETY_ON_NULL_RETURN(r);
    eina_strbuf_free(r->buf);
+   free((char *)r->dir);
    free(r);
 }
 

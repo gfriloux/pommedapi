@@ -16,14 +16,14 @@ test_run(
 
    DBG("Running test [%s]", t->query.path + t->query.name_start);
 
-   tr = test_run_new(t, done, error, data);
-   EINA_SAFETY_ON_NULL_RETURN_VAL(tr, EINA_FALSE);
-
-   if (tr->t->conf->disabled)
+   if (t->conf->disabled)
      {
-        tr->cb.done(tr->cb.data, tr->t);
+        done(data, t);
         return EINA_TRUE;
      }
+
+   tr = test_run_new(t, done, error, data);
+   EINA_SAFETY_ON_NULL_RETURN_VAL(tr, EINA_FALSE);
 
    gettimeofday(&t->query.time, 0);
 
@@ -35,6 +35,7 @@ test_run(
    else
      http_data_download(t->query.url, t->query.headers,
                         test_run_progress, test_run_done, test_run_error, tr);
+   return EINA_TRUE;
 }
 
 void
