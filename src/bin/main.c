@@ -13,8 +13,8 @@ static const Ecore_Getopt optdesc = {
    "pommedapi",
    "%prog -d testsdir",
    PACKAGE_VERSION,
-   "(C) AMTrust",
-   "All rights reserved.",
+   "(C) Guillaume Friloux",
+   "BSD.",
    "Web API tester",
    0,
    {
