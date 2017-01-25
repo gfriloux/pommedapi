@@ -14,6 +14,18 @@ typedef struct _Test_Run
       Test_Error_Cb error;
       void *data;
    } cb;
+
+   struct
+   {
+      Ecore_Event_Handler *data,
+                          *del;
+   } ev;
+
+   struct
+   {
+      char *path;
+      int fd;
+   } tmpfile;
 } Test_Run;
 
 extern int _test_log_dom_global;

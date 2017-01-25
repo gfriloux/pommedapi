@@ -1,6 +1,7 @@
 #ifndef TEST_H
 #define TEST_H
 #include <Eina.h>
+#include <Ecore.h>
 #include <Serialize.h>
 
 typedef struct _Test
@@ -36,6 +37,13 @@ typedef struct _Test
 
       Eina_List *headers;
    } result;
+
+   struct
+   {
+      const char *file;
+      unsigned int exit_code;
+      Eina_Strbuf *output;
+   } validate;
 } Test;
 
 typedef void (*Test_Done_Cb)(void *data, Test *t);

@@ -23,16 +23,23 @@ rendering_test_description(
    buf = eina_strbuf_new();
    EINA_SAFETY_ON_NULL_RETURN_VAL(buf, NULL);
 
+   eina_strbuf_append(buf, "<menu>\n");
+
    eina_strbuf_append_printf(buf, "%s\n<br />\n", t->conf->description);
+   if (t->conf->disabled) goto end;
+
    eina_strbuf_append_printf(buf,
                              "<h3>Expected results</h3>\n"
-                             "<ul>\n"
-                             "  <li>http code : %d</li>\n"
-                             "  <li>time : %dms</li>\n"
-                             "</ul>\n",
-                             t->conf->expect->http_code,
-                             t->conf->expect->time);
+                             "<ul>\n");
+   if (t->conf->expect->http_code)
+     eina_strbuf_append_printf(buf, "  <li>http code : %d</li>\n", t->conf->expect->http_code);
+   if (t->conf->expect->time)
+     eina_strbuf_append_printf(buf, "  <li>time : %dms</li>\n", t->conf->expect->time);
+   if (t->validate.file)
+     eina_strbuf_append(buf, "  <li>Returned data validation</li>\n");
+   eina_strbuf_append(buf, "</ul>\n</menu>\n");
 
+end:
    s = eina_strbuf_string_steal(buf);
    eina_strbuf_free(buf);
 
@@ -155,8 +162,12 @@ rendering_test_size(
    EINA_SAFETY_ON_NULL_RETURN_VAL(buf, NULL);
 
    eina_strbuf_append(buf, "<button type=\"button\" class=\"btn ");
-   eina_strbuf_append_printf(buf, "%s btn-xs\">", (t->conf->disabled) ? "btn-default" : "btn-success");
-   eina_strbuf_append(buf, "<span class=\"glyphicon glyphicon-download\" aria-hidden=\"true\"></span>");
+
+   if (t->conf->disabled) eina_strbuf_append_printf(buf, "btn-default");
+   else if (!t->validate.file) eina_strbuf_append_printf(buf, "btn-default");
+   else if (t->validate.exit_code) eina_strbuf_append_printf(buf, "btn-danger");
+   else eina_strbuf_append_printf(buf, "btn-success");
+   eina_strbuf_append(buf, " btn-xs\"><span class=\"glyphicon glyphicon-download\" aria-hidden=\"true\"></span>");
    eina_strbuf_append_printf(buf, "&nbsp;%zu bytes", eina_strbuf_length_get(t->result.data.buf));
    eina_strbuf_append(buf, "</button>");
 
@@ -184,6 +195,14 @@ rendering_test_result(
    return strdup(eina_strbuf_string_get(t->result.data.buf));
 }
 
+char *
+rendering_test_validation(
+   void *data)
+{
+   Test *t = data;
+   return strdup(eina_strbuf_string_get(t->validate.output));
+}
+
 const char *
 rendering_test(
    Rendering *r,
@@ -204,6 +223,7 @@ rendering_test(
    template_function_add(tpl, "$$SIZE$$"       , rendering_test_size       , t);
    template_function_add(tpl, "$$QUERY$$"      , rendering_test_query      , t);
    template_function_add(tpl, "$$RESULT$$"     , rendering_test_result     , t);
+   template_function_add(tpl, "$$VALIDATION$$" , rendering_test_validation , t);
    template_function_add(tpl, "$$ID$$"         , rendering_test_id         , t);
    template_function_add(tpl, "$$DESCRIPTION$$", rendering_test_description, t);
    template_function_add(tpl, "$$DISABLE$$"    , rendering_test_disable    , t);

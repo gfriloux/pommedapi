@@ -1,6 +1,25 @@
 #include "gfile_private.h"
 
 Eina_Bool
+gfile_fd_write(
+   int         fd,
+   const char *data,
+   size_t      size)
+{
+   ssize_t nb;
+   size_t  offset = 0;
+
+   while (offset != size)
+     {
+        nb = write(fd, data + offset, size - offset);
+        EINA_SAFETY_ON_TRUE_RETURN_VAL(nb == -1, EINA_FALSE);
+
+        offset += nb;
+     }
+   return EINA_TRUE;
+}
+
+Eina_Bool
 gfile_data_write(
    const char *file,
    const char *data,

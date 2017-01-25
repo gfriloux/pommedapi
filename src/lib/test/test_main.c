@@ -53,6 +53,9 @@ test_free(
 
    eina_strbuf_free(t->result.data.buf);
 
+   free((char *)t->validate.file);
+   eina_strbuf_free(t->validate.output);
+
    free(t);
 }
 
@@ -90,6 +93,15 @@ test_new(
    ret = access(s, R_OK);
    if (!ret) t->query.data.data = gfile_data_read(s, &t->query.data.len);
    free(s);
+
+   s = test_utils_strdupf("%s/validate", t->query.path);
+   EINA_SAFETY_ON_NULL_GOTO(s, free_t);
+   ret = access(s, R_OK);
+   if (!ret) t->validate.file = strdup(s);
+   free(s);
+
+   t->validate.output = eina_strbuf_new();
+   EINA_SAFETY_ON_NULL_GOTO(t->validate.output, free_t);
 
    EINA_LIST_FOREACH(t->conf->headers, l, jqh)
      {

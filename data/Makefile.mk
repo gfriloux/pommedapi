@@ -11,7 +11,12 @@ EXTRA_DIST +=                                                                  \
    data/html/data/fonts/glyphicons-halflings-regular.woff2                     \
    data/templates/output.tpl                                                   \
    data/templates/test.tpl                                                     \
-   data/templates/stats.tpl
+   data/templates/stats.tpl                                                    \
+   data/functions.sh
+
+pommedapidir = $(datarootdir)/pommedapi/
+pommedapi_SCRIPTS =                                                            \
+   data/functions.sh
 
 tpldir = $(datarootdir)/pommedapi/templates/
 tpl_DATA =                                                                     \
