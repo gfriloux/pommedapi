@@ -12,7 +12,3 @@
 #include <fcntl.h>
 #include <sys/file.h>
 
-#ifdef _WIN32
-char * gfile_strndup(const char *s, size_t n);
-#endif
-

@@ -83,47 +83,23 @@ gfile_data_read(
 
    *size = eina_file_size_get(ef);
 
-#ifdef _WIN32
-   s = gfile_strndup(p, *size);
-#else
-   s = strndup(p, *size);
-#endif
+   s = calloc(*size, sizeof(char));
    EINA_SAFETY_ON_NULL_GOTO(s, free_ef);
+
+   s = memcpy(s, p, *size);
+   EINA_SAFETY_ON_NULL_GOTO(s, free_s);
 
    eina_file_map_free(ef, (void*)p);
    eina_file_close(ef);
 
    return s;
 
+free_s:
+   free(s);
 free_ef:
    eina_file_close(ef);
    return NULL;
 }
-
-#ifdef _WIN32
-/*
- * Evil is supposed to export strndup, but it seems
- * it doesnt work out well. Dunno why is working on my
- * machine, but not on the jenkins node.
- * So, Lets add this function !
- */
-char *
-gfile_strndup(
-   const char *s,
-   size_t      n)
-{
-   char  *p;
-   size_t l = strlen(s);
-
-   if (l > n) l = n;
-
-   p = (char*)malloc(l + 1);
-   if (!p) return NULL;
-
-   p[l] = '\0';
-   return (char*)memcpy(p, s, l);
-}
-#endif
 
 Eina_Bool
 gfile_copy(
