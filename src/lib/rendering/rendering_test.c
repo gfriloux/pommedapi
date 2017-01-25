@@ -32,9 +32,9 @@ rendering_test_description(
                              "<h3>Expected results</h3>\n"
                              "<ul>\n");
    if (t->conf->expect->http_code)
-     eina_strbuf_append_printf(buf, "  <li>http code : %d</li>\n", t->conf->expect->http_code);
+     eina_strbuf_append_printf(buf, "  <li>http code = %d</li>\n", t->conf->expect->http_code);
    if (t->conf->expect->time)
-     eina_strbuf_append_printf(buf, "  <li>time : %dms</li>\n", t->conf->expect->time);
+     eina_strbuf_append_printf(buf, "  <li>time < %dms</li>\n", t->conf->expect->time);
    if (t->validate.file)
      eina_strbuf_append(buf, "  <li>Returned data validation</li>\n");
    eina_strbuf_append(buf, "</ul>\n</menu>\n");
