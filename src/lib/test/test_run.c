@@ -54,8 +54,6 @@ _test_run_validate_data(
    Test_Run *tr            = data;
    Ecore_Exe_Event_Data *d = event;
 
-   DBG("!");
-
    if (data != ecore_exe_data_get(d->exe))
      return EINA_TRUE;
 
@@ -73,17 +71,10 @@ _test_run_validate_del(
    Test_Run *tr           = data;
    Ecore_Exe_Event_Del *d = event;
 
-   DBG("!");
-
    if (data != ecore_exe_data_get(d->exe))
      return EINA_TRUE;
 
    tr->t->validate.exit_code = d->exit_code;
-
-   DBG("tr->t->validate.exit_code[%u]", tr->t->validate.exit_code);
-   DBG("Data :\n%.*s\n",
-       eina_strbuf_length_get(tr->t->validate.output),
-       eina_strbuf_string_get(tr->t->validate.output));
 
    tr->cb.done(tr->cb.data, tr->t);
    test_run_free(tr);
@@ -137,7 +128,6 @@ done_cb:
    EINA_SAFETY_ON_NULL_GOTO(cmd, done_cb);
 
    // Running validation script.
-   DBG("Running script [%s]", cmd);
    exe = ecore_exe_pipe_run(cmd, ECORE_EXE_PIPE_READ, tr);
    free(cmd);
    EINA_SAFETY_ON_NULL_GOTO(exe, done_cb);
