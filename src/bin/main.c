@@ -35,7 +35,7 @@ main(
 {
    char *opt_test = NULL,
         *opt_html = NULL;
-   Eina_Bool opt_quit;
+   Eina_Bool opt_quit = EINA_FALSE;
    int exit_code = 0;
    Pommedapi *p;
 
