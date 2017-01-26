@@ -60,6 +60,8 @@ main(
    if (ecore_getopt_parse(&optdesc, values, argc, (char **)argv) < 0)
      _CRI_GOTO("Failed to parse args", unregister_log_domain);
 
+   if (opt_quit) return 0;
+
    serialize_init();
    http_init();
    rendering_init();
