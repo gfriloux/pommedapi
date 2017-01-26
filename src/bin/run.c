@@ -8,8 +8,6 @@ run_done(
    Pommedapi *p = data;
 
    DBG("p[%p]", p);
-
-end:
    run_next(p);
 }
 
