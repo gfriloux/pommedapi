@@ -155,6 +155,7 @@ rendering_test_size(
    Test *t = data;
    Eina_Strbuf *buf;
    char *s;
+   Expect_Level level;
 
    DBG("t[%p]", t);
 
@@ -163,10 +164,19 @@ rendering_test_size(
 
    eina_strbuf_append(buf, "<button type=\"button\" class=\"btn ");
 
-   if (t->conf->disabled) eina_strbuf_append_printf(buf, "btn-default");
-   else if (!t->validate.file) eina_strbuf_append_printf(buf, "btn-default");
-   else if (t->validate.exit_code) eina_strbuf_append_printf(buf, "btn-danger");
-   else eina_strbuf_append_printf(buf, "btn-success");
+   level = expect_test_validation(t);
+   switch (level)
+     {
+      case EXPECT_DISABLE:
+        eina_strbuf_append(buf, "btn-default");
+        break;
+      case EXPECT_SUCCESS:
+        eina_strbuf_append(buf, "btn-success");
+        break;
+      default:
+        eina_strbuf_append(buf, "btn-danger");
+     }
+
    eina_strbuf_append(buf, " btn-xs\"><span class=\"glyphicon glyphicon-download\" aria-hidden=\"true\"></span>");
    eina_strbuf_append_printf(buf, "&nbsp;%zu bytes", eina_strbuf_length_get(t->result.data.buf));
    eina_strbuf_append(buf, "</button>");

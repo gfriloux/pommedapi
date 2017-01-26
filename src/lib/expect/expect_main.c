@@ -30,6 +30,16 @@ expect_test_http_code(Test *t)
 }
 
 Expect_Level
+expect_test_validation(
+   Test *t)
+{
+   if ((t->conf->disabled) || (!t->validate.file)) return EXPECT_DISABLE;
+   if (t->validate.exit_code) return EXPECT_DANGER;
+
+   return EXPECT_SUCCESS;
+}
+
+Expect_Level
 expect_test(Test *t)
 {
    Expect_Level level = EXPECT_SUCCESS,
@@ -41,6 +51,9 @@ expect_test(Test *t)
    if (level < test) level = test;
 
    test = expect_test_latency(t);
+   if (level < test) level = test;
+
+   test = expect_test_validation(t);
    if (level < test) level = test;
 
    return level;
