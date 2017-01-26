@@ -35,17 +35,16 @@ expect_test_validation(
 {
    if ((t->conf->disabled) || (!t->validate.file)) return EXPECT_DISABLE;
    if (t->validate.exit_code) return EXPECT_DANGER;
-
    return EXPECT_SUCCESS;
 }
 
 Expect_Level
 expect_test(Test *t)
 {
-   Expect_Level level = EXPECT_SUCCESS,
+   Expect_Level level = EXPECT_DISABLE,
                 test;
 
-   if (t->conf->disabled) return EXPECT_DISABLE;
+   if (t->conf->disabled) goto end;
 
    test = expect_test_http_code(t);
    if (level < test) level = test;
@@ -56,6 +55,8 @@ expect_test(Test *t)
    test = expect_test_validation(t);
    if (level < test) level = test;
 
+end:
+   DBG("test[%s] returns level[%d]", t->query.path + t->query.name_start, level);
    return level;
 }
 
