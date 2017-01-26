@@ -1,0 +1,57 @@
+---
+layout: default
+title: Installation Guide
+---
+
+<h1>Installation guide</h1>
+
+<h2>Dependencies</h2>
+
+<h3>EFL</h3>
+You will need <a href="https://www.enlightenment.org/" target=_blank>EFL</a>
+to build pommedapi.<br />
+Since 1.8, EFL merged and you are now forced to build the whole project
+(including GUI libs) to be able to use them (even if you dont need the GUI
+stuff).<br />
+This is the reason i forked branch 1.7 to be able to only build a portion
+of them.
+
+<h4>Building latest EFL</h4>
+You might have them packages for your distribution, otherwise go to
+<a href="https://www.enlightenment.org/" target=_blank>https://www.enlightenment.org/</a>
+
+<h4>Building branch 1.7</h4>
+You need to build libs in this order :
+<ul>
+  <li><a href="https://github.com/gfriloux/eina">eina</a></li>
+  <li><a href="https://github.com/gfriloux/eet">eet</a></li>
+  <li><a href="https://github.com/gfriloux/ecore">ecore</a></li>
+  <li><a href="https://github.com/gfriloux/eio">eio</a></li>
+</ul>
+<br /><br />
+
+<h3>Maelstrom</h3>
+This EFL library (which isnt part of EFL tree) implements 5 network protocols :
+<ul>
+  <li>IMAP</li>
+  <li>POP3</li>
+  <li>SMTP</li>
+  <li>HTTP</li>
+  <li>XMPP</li>
+</ul>
+We will be using it for HTTP & XMPP (maybe we could later use the emails
+protocols if we need read/send emails).<br />
+<br />
+The HTTP library is mostly used for :
+<ul>
+  <li>Its serialization library allowing us to quickly work with JSON.</li>
+  <li>Its functions to create web requests</li>
+</ul>
+You can get the source code of this library <a href="https://github.com/gfriloux/maelstrom" target=_blank>here</a>.
+<br /><br />
+
+<h2>Building pommedapi</h2>
+<pre><code class="bash">./autogen.sh
+make
+make install</code></pre>
+<br /><br /><br /><br />

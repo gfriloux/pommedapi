@@ -1,0 +1,421 @@
+<!doctype html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta charset="utf-8">
+    <title>Pommedapi</title>
+    <link href="data/css/bootstrap.min.css" rel="stylesheet">
+    <link href="data/css/monokai-sublime.css" rel="stylesheet">
+  </head>
+  <body>
+    <div class="container">
+    <nav class="navbar navbar-default" role="navigation">
+      <div class="container-fluid">
+        <div class="navbar-header">
+          <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+            <span class="sr-only">Toggle navigation</span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </button>
+          <a class="navbar-brand" href="">Pommedapi's Results</a>
+        </div>
+      </div>
+    </nav>
+
+    <div class="content">
+      <div class="panel panel-default">
+  <div class="panel-heading">Stats</div>
+  <div class="panel-body">
+    <button type="button" class="btn btn-lg btn-success">
+      <span class="glyphicon glyphicon-thumbs-up" aria-hidden="true"></span>&nbsp;&nbsp;5
+    </button>
+
+    <button type="button" class="btn btn-lg btn-warning">
+      <span class="glyphicon glyphicon-warning-sign" aria-hidden="true"></span>&nbsp;&nbsp;1
+    </button>
+
+    <button type="button" class="btn btn-lg btn-danger">
+      <span class="glyphicon glyphicon-remove-sign" aria-hidden="true"></span>&nbsp;&nbsp;1
+    </button>
+
+    <button type="button" class="btn btn-lg btn-default">
+      <span class="glyphicon glyphicon-eye-close" aria-hidden="true"></span>&nbsp;&nbsp;1
+    </button>
+  </div>
+</div>
+
+
+      <div class="panel panel-primary">
+  <div class="panel-heading">
+    <h3 class="panel-title">001_version - http://www.foaas.com:80/version</h3>
+  </div>
+  <div class="panel-body">
+    <button type="button" class="btn btn-success btn-xs"><span class="glyphicon glyphicon-record" aria-hidden="true"></span>&nbsp;200</button>
+
+    <button type="button" class="btn btn-success btn-xs"><span class="glyphicon glyphicon-hourglass" aria-hidden="true"></span>&nbsp;412.99ms</button>
+
+    <button type="button" class="btn btn-success btn-xs"><span class="glyphicon glyphicon-download" aria-hidden="true"></span>&nbsp;46 bytes</button>
+
+    <br /><br />
+    <ul class="nav nav-tabs">
+      <li class="active"><a href="#001_version_desc" data-toggle="tab" aria-expanded="true">Description</a></li>
+      <li class=""><a href="#001_version_sent" data-toggle="tab" aria-expanded="false">Sent data</a></li>
+      <li class=""><a href="#001_version_received" data-toggle="tab" aria-expanded="false">Received data</a></li>
+      <li class=""><a href="#001_version_validation" data-toggle="tab" aria-expanded="false">Validation data</a></li>
+    </ul>
+    <div id="myTabContent" class="tab-content">
+      <div class="tab-pane fade active in" id="001_version_desc">
+        <menu>
+Check foaas's version.
+<br />
+<h3>Expected results</h3>
+<ul>
+  <li>http code = 200</li>
+  <li>time < 1000ms</li>
+  <li>Returned data validation</li>
+</ul>
+</menu>
+
+      </div>
+      <div class="tab-pane fade in" id="001_version_sent">
+        <pre><code class="json"></code></pre>
+      </div>
+      <div class="tab-pane fade in" id="001_version_received">
+        <pre><code class="json">{"message":"Version 1.1.0","subtitle":"FOAAS"}</code></pre>
+      </div>
+      <div class="tab-pane fade in" id="001_version_validation">
+        <pre><code class="json">Checking .message : OK
+Checking .subtitle : OK
+</code></pre>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="panel panel-default">
+  <div class="panel-heading">
+    <h3 class="panel-title">002_operations - http://www.foaas.com:80/operations</h3>
+  </div>
+  <div class="panel-body">
+    <button type="button" class="btn btn-default btn-xs"><span class="glyphicon glyphicon-record" aria-hidden="true"></span>&nbsp;0</button>
+
+    <button type="button" class="btn btn-default btn-xs"><span class="glyphicon glyphicon-hourglass" aria-hidden="true"></span>&nbsp;0.00ms</button>
+
+    <button type="button" class="btn btn-default btn-xs"><span class="glyphicon glyphicon-download" aria-hidden="true"></span>&nbsp;0 bytes</button>
+
+    <br /><br />
+    <ul class="nav nav-tabs">
+      <li class="active"><a href="#002_operations_desc" data-toggle="tab" aria-expanded="true">Description</a></li>
+      <li class=""><a href="#002_operations_sent" data-toggle="tab" aria-expanded="false">Sent data</a></li>
+      <li class=""><a href="#002_operations_received" data-toggle="tab" aria-expanded="false">Received data</a></li>
+      <li class=""><a href="#002_operations_validation" data-toggle="tab" aria-expanded="false">Validation data</a></li>
+    </ul>
+    <div id="myTabContent" class="tab-content">
+      <div class="tab-pane fade active in" id="002_operations_desc">
+        <menu>
+Check foaas's available operations.<br />This test is volontary disabled
+<br />
+
+      </div>
+      <div class="tab-pane fade in" id="002_operations_sent">
+        <pre><code class="json"></code></pre>
+      </div>
+      <div class="tab-pane fade in" id="002_operations_received">
+        <pre><code class="json"></code></pre>
+      </div>
+      <div class="tab-pane fade in" id="002_operations_validation">
+        <pre><code class="json"></code></pre>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="panel panel-primary">
+  <div class="panel-heading">
+    <h3 class="panel-title">003_anyway - http://www.foaas.com:80/anyway/company/author</h3>
+  </div>
+  <div class="panel-body">
+    <button type="button" class="btn btn-success btn-xs"><span class="glyphicon glyphicon-record" aria-hidden="true"></span>&nbsp;200</button>
+
+    <button type="button" class="btn btn-success btn-xs"><span class="glyphicon glyphicon-hourglass" aria-hidden="true"></span>&nbsp;586.32ms</button>
+
+    <button type="button" class="btn btn-success btn-xs"><span class="glyphicon glyphicon-download" aria-hidden="true"></span>&nbsp;133 bytes</button>
+
+    <br /><br />
+    <ul class="nav nav-tabs">
+      <li class="active"><a href="#003_anyway_desc" data-toggle="tab" aria-expanded="true">Description</a></li>
+      <li class=""><a href="#003_anyway_sent" data-toggle="tab" aria-expanded="false">Sent data</a></li>
+      <li class=""><a href="#003_anyway_received" data-toggle="tab" aria-expanded="false">Received data</a></li>
+      <li class=""><a href="#003_anyway_validation" data-toggle="tab" aria-expanded="false">Validation data</a></li>
+    </ul>
+    <div id="myTabContent" class="tab-content">
+      <div class="tab-pane fade active in" id="003_anyway_desc">
+        <menu>
+Check foaas's /anyway.
+<br />
+<h3>Expected results</h3>
+<ul>
+  <li>http code = 200</li>
+  <li>time < 1000ms</li>
+  <li>Returned data validation</li>
+</ul>
+</menu>
+
+      </div>
+      <div class="tab-pane fade in" id="003_anyway_sent">
+        <pre><code class="json"></code></pre>
+      </div>
+      <div class="tab-pane fade in" id="003_anyway_received">
+        <pre><code class="json">{"message":"Who the fuck are you anyway, company, why are you stirring up so much trouble, and, who pays you?","subtitle":"- author"}</code></pre>
+      </div>
+      <div class="tab-pane fade in" id="003_anyway_validation">
+        <pre><code class="json">Checking .message : OK
+Checking .subtitle : OK
+</code></pre>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="panel panel-primary">
+  <div class="panel-heading">
+    <h3 class="panel-title">004_awesome - http://www.foaas.com:80/awesome/author</h3>
+  </div>
+  <div class="panel-body">
+    <button type="button" class="btn btn-success btn-xs"><span class="glyphicon glyphicon-record" aria-hidden="true"></span>&nbsp;200</button>
+
+    <button type="button" class="btn btn-success btn-xs"><span class="glyphicon glyphicon-hourglass" aria-hidden="true"></span>&nbsp;273.89ms</button>
+
+    <button type="button" class="btn btn-success btn-xs"><span class="glyphicon glyphicon-download" aria-hidden="true"></span>&nbsp;60 bytes</button>
+
+    <br /><br />
+    <ul class="nav nav-tabs">
+      <li class="active"><a href="#004_awesome_desc" data-toggle="tab" aria-expanded="true">Description</a></li>
+      <li class=""><a href="#004_awesome_sent" data-toggle="tab" aria-expanded="false">Sent data</a></li>
+      <li class=""><a href="#004_awesome_received" data-toggle="tab" aria-expanded="false">Received data</a></li>
+      <li class=""><a href="#004_awesome_validation" data-toggle="tab" aria-expanded="false">Validation data</a></li>
+    </ul>
+    <div id="myTabContent" class="tab-content">
+      <div class="tab-pane fade active in" id="004_awesome_desc">
+        <menu>
+Check foaas's /awesome.
+<br />
+<h3>Expected results</h3>
+<ul>
+  <li>http code = 200</li>
+  <li>time < 1000ms</li>
+  <li>Returned data validation</li>
+</ul>
+</menu>
+
+      </div>
+      <div class="tab-pane fade in" id="004_awesome_sent">
+        <pre><code class="json"></code></pre>
+      </div>
+      <div class="tab-pane fade in" id="004_awesome_received">
+        <pre><code class="json">{"message":"This is Fucking Awesome.","subtitle":"- author"}</code></pre>
+      </div>
+      <div class="tab-pane fade in" id="004_awesome_validation">
+        <pre><code class="json">Checking .message : OK
+Checking .subtitle : OK
+</code></pre>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="panel panel-primary">
+  <div class="panel-heading">
+    <h3 class="panel-title">005_back - http://www.foaas.com:80/back/name/from</h3>
+  </div>
+  <div class="panel-body">
+    <button type="button" class="btn btn-success btn-xs"><span class="glyphicon glyphicon-record" aria-hidden="true"></span>&nbsp;200</button>
+
+    <button type="button" class="btn btn-success btn-xs"><span class="glyphicon glyphicon-hourglass" aria-hidden="true"></span>&nbsp;186.90ms</button>
+
+    <button type="button" class="btn btn-success btn-xs"><span class="glyphicon glyphicon-download" aria-hidden="true"></span>&nbsp;58 bytes</button>
+
+    <br /><br />
+    <ul class="nav nav-tabs">
+      <li class="active"><a href="#005_back_desc" data-toggle="tab" aria-expanded="true">Description</a></li>
+      <li class=""><a href="#005_back_sent" data-toggle="tab" aria-expanded="false">Sent data</a></li>
+      <li class=""><a href="#005_back_received" data-toggle="tab" aria-expanded="false">Received data</a></li>
+      <li class=""><a href="#005_back_validation" data-toggle="tab" aria-expanded="false">Validation data</a></li>
+    </ul>
+    <div id="myTabContent" class="tab-content">
+      <div class="tab-pane fade active in" id="005_back_desc">
+        <menu>
+Check foaas's /back.
+<br />
+<h3>Expected results</h3>
+<ul>
+  <li>http code = 200</li>
+  <li>time < 1000ms</li>
+  <li>Returned data validation</li>
+</ul>
+</menu>
+
+      </div>
+      <div class="tab-pane fade in" id="005_back_sent">
+        <pre><code class="json"></code></pre>
+      </div>
+      <div class="tab-pane fade in" id="005_back_received">
+        <pre><code class="json">{"message":"name, back the fuck off.","subtitle":"- from"}</code></pre>
+      </div>
+      <div class="tab-pane fade in" id="005_back_validation">
+        <pre><code class="json">Checking .message : OK
+Checking .subtitle : OK
+</code></pre>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="panel panel-primary">
+  <div class="panel-heading">
+    <h3 class="panel-title">100_nonexistent - http://www.foaas.com:80/nonexistentdddd</h3>
+  </div>
+  <div class="panel-body">
+    <button type="button" class="btn btn-danger btn-xs"><span class="glyphicon glyphicon-record" aria-hidden="true"></span>&nbsp;622</button>
+
+    <button type="button" class="btn btn-success btn-xs"><span class="glyphicon glyphicon-hourglass" aria-hidden="true"></span>&nbsp;200.51ms</button>
+
+    <button type="button" class="btn btn-default btn-xs"><span class="glyphicon glyphicon-download" aria-hidden="true"></span>&nbsp;151 bytes</button>
+
+    <br /><br />
+    <ul class="nav nav-tabs">
+      <li class="active"><a href="#100_nonexistent_desc" data-toggle="tab" aria-expanded="true">Description</a></li>
+      <li class=""><a href="#100_nonexistent_sent" data-toggle="tab" aria-expanded="false">Sent data</a></li>
+      <li class=""><a href="#100_nonexistent_received" data-toggle="tab" aria-expanded="false">Received data</a></li>
+      <li class=""><a href="#100_nonexistent_validation" data-toggle="tab" aria-expanded="false">Validation data</a></li>
+    </ul>
+    <div id="myTabContent" class="tab-content">
+      <div class="tab-pane fade active in" id="100_nonexistent_desc">
+        <menu>
+Query a non handled URI.<br />This test is supposed to fail as foaas.com will return a 622 http code.
+<br />
+<h3>Expected results</h3>
+<ul>
+  <li>http code = 200</li>
+  <li>time < 1000ms</li>
+</ul>
+</menu>
+
+      </div>
+      <div class="tab-pane fade in" id="100_nonexistent_sent">
+        <pre><code class="json"></code></pre>
+      </div>
+      <div class="tab-pane fade in" id="100_nonexistent_received">
+        <pre><code class="json">{"message":"622 - All The Fucks","subtitle":"Server invites you to consider the truly monumental amount of fucks it couldn't give about your request."}</code></pre>
+      </div>
+      <div class="tab-pane fade in" id="100_nonexistent_validation">
+        <pre><code class="json"></code></pre>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="panel panel-primary">
+  <div class="panel-heading">
+    <h3 class="panel-title">101_expected_nonexistent - http://www.foaas.com:80/nonexistentdddd</h3>
+  </div>
+  <div class="panel-body">
+    <button type="button" class="btn btn-success btn-xs"><span class="glyphicon glyphicon-record" aria-hidden="true"></span>&nbsp;622</button>
+
+    <button type="button" class="btn btn-success btn-xs"><span class="glyphicon glyphicon-hourglass" aria-hidden="true"></span>&nbsp;223.12ms</button>
+
+    <button type="button" class="btn btn-success btn-xs"><span class="glyphicon glyphicon-download" aria-hidden="true"></span>&nbsp;151 bytes</button>
+
+    <br /><br />
+    <ul class="nav nav-tabs">
+      <li class="active"><a href="#101_expected_nonexistent_desc" data-toggle="tab" aria-expanded="true">Description</a></li>
+      <li class=""><a href="#101_expected_nonexistent_sent" data-toggle="tab" aria-expanded="false">Sent data</a></li>
+      <li class=""><a href="#101_expected_nonexistent_received" data-toggle="tab" aria-expanded="false">Received data</a></li>
+      <li class=""><a href="#101_expected_nonexistent_validation" data-toggle="tab" aria-expanded="false">Validation data</a></li>
+    </ul>
+    <div id="myTabContent" class="tab-content">
+      <div class="tab-pane fade active in" id="101_expected_nonexistent_desc">
+        <menu>
+This time, we validate the error on non existent URI.
+<br />
+<h3>Expected results</h3>
+<ul>
+  <li>http code = 622</li>
+  <li>time < 1000ms</li>
+  <li>Returned data validation</li>
+</ul>
+</menu>
+
+      </div>
+      <div class="tab-pane fade in" id="101_expected_nonexistent_sent">
+        <pre><code class="json"></code></pre>
+      </div>
+      <div class="tab-pane fade in" id="101_expected_nonexistent_received">
+        <pre><code class="json">{"message":"622 - All The Fucks","subtitle":"Server invites you to consider the truly monumental amount of fucks it couldn't give about your request."}</code></pre>
+      </div>
+      <div class="tab-pane fade in" id="101_expected_nonexistent_validation">
+        <pre><code class="json">Checking .message : OK
+Checking .subtitle : OK
+</code></pre>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="panel panel-primary">
+  <div class="panel-heading">
+    <h3 class="panel-title">102_slow_awesome - http://www.foaas.com:80/awesome/author</h3>
+  </div>
+  <div class="panel-body">
+    <button type="button" class="btn btn-success btn-xs"><span class="glyphicon glyphicon-record" aria-hidden="true"></span>&nbsp;200</button>
+
+    <button type="button" class="btn btn-warning btn-xs"><span class="glyphicon glyphicon-hourglass" aria-hidden="true"></span>&nbsp;174.07ms</button>
+
+    <button type="button" class="btn btn-success btn-xs"><span class="glyphicon glyphicon-download" aria-hidden="true"></span>&nbsp;60 bytes</button>
+
+    <br /><br />
+    <ul class="nav nav-tabs">
+      <li class="active"><a href="#102_slow_awesome_desc" data-toggle="tab" aria-expanded="true">Description</a></li>
+      <li class=""><a href="#102_slow_awesome_sent" data-toggle="tab" aria-expanded="false">Sent data</a></li>
+      <li class=""><a href="#102_slow_awesome_received" data-toggle="tab" aria-expanded="false">Received data</a></li>
+      <li class=""><a href="#102_slow_awesome_validation" data-toggle="tab" aria-expanded="false">Validation data</a></li>
+    </ul>
+    <div id="myTabContent" class="tab-content">
+      <div class="tab-pane fade active in" id="102_slow_awesome_desc">
+        <menu>
+Check foaas's /awesome.<br />Supposed to raise a warning as we expect an answer under 1ms.
+<br />
+<h3>Expected results</h3>
+<ul>
+  <li>http code = 200</li>
+  <li>time < 1ms</li>
+  <li>Returned data validation</li>
+</ul>
+</menu>
+
+      </div>
+      <div class="tab-pane fade in" id="102_slow_awesome_sent">
+        <pre><code class="json"></code></pre>
+      </div>
+      <div class="tab-pane fade in" id="102_slow_awesome_received">
+        <pre><code class="json">{"message":"This is Fucking Awesome.","subtitle":"- author"}</code></pre>
+      </div>
+      <div class="tab-pane fade in" id="102_slow_awesome_validation">
+        <pre><code class="json">Checking .message : OK
+Checking .subtitle : OK
+</code></pre>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+    </div>
+  </body>
+  <script src="data/js/jquery.min.js"></script>
+  <script src="data/js/bootstrap.min.js"></script>
+  <script src="data/js/highlight.min.js"></script>
+  <script type="text/javascript">
+    hljs.initHighlightingOnLoad();
+  </script>
+</html>
