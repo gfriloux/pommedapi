@@ -1,0 +1,15 @@
+{
+   "uri" : "/nonexistentdddd",
+   "description" : "Query a non handled URI.<br />This test is supposed to fail as foaas.com will return a 622 http code.",
+   "headers" : [
+      {
+         "name"  : "Accept",
+         "value" : "application/json"
+      }
+   ],
+   "timeout" : 10,
+   "expect" : {
+      "time" : 1000,
+      "http_code" : 200
+   }
+}

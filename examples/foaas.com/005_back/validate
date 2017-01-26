@@ -1,0 +1,8 @@
+#!/usr/bin/env bash
+
+. /usr/local/share/pommedapi/functions.sh
+
+jq_assert_val "${1}" ".message" "name, back the fuck off."
+jq_assert_val "${1}" ".subtitle" "- from"
+
+exit 0

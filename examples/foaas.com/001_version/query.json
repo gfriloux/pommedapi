@@ -1,0 +1,15 @@
+{
+   "uri" : "/version",
+   "description" : "Check foaas's version.",
+   "headers" : [
+      {
+         "name"  : "Accept",
+         "value" : "application/json"
+      }
+   ],
+   "timeout" : 10,
+   "expect" : {
+      "time" : 1000,
+      "http_code" : 200
+   }
+}

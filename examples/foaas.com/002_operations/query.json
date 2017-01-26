@@ -1,0 +1,12 @@
+{
+   "uri" : "/operations",
+   "description" : "Check foaas's available operations.<br />This test is volontary disabled",
+   "disabled" : true,
+   "headers" : [
+   ],
+   "timeout" : 10,
+   "expect" : {
+      "time" : 1000,
+      "http_code" : 200
+   }
+}

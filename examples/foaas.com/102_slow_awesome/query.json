@@ -1,0 +1,15 @@
+{
+   "uri" : "/awesome/author",
+   "description" : "Check foaas's /awesome.<br />Supposed to raise a warning as we expect an answer under 1ms.",
+   "headers" : [
+      {
+         "name"  : "Accept",
+         "value" : "application/json"
+      }
+   ],
+   "timeout" : 10,
+   "expect" : {
+      "time" : 1,
+      "http_code" : 200
+   }
+}

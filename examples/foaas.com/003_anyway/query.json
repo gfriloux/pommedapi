@@ -1,0 +1,15 @@
+{
+   "uri" : "/anyway/company/author",
+   "description" : "Check foaas's /anyway.",
+   "headers" : [
+      {
+         "name"  : "Accept",
+         "value" : "application/json"
+      }
+   ],
+   "timeout" : 10,
+   "expect" : {
+      "time" : 1000,
+      "http_code" : 200
+   }
+}

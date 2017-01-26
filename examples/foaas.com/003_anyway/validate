@@ -1,0 +1,8 @@
+#!/usr/bin/env bash
+
+. /usr/local/share/pommedapi/functions.sh
+
+jq_assert_val "${1}" ".message" "Who the fuck are you anyway, company, why are you stirring up so much trouble, and, who pays you?"
+jq_assert_val "${1}" ".subtitle" "- author"
+
+exit 0
