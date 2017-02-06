@@ -25,5 +25,6 @@ struct Query
    boolean disabled;
    array<Query_Header> headers;
    int timeout;
+   int post_delay;
    Query_Expect expect;
 };
