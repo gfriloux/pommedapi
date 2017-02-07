@@ -4,6 +4,7 @@ struct Pommedapi_Conf
 {
    string host;
    int port;
+   string description;
 };
 
 struct Query_Header

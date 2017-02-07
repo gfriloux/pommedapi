@@ -41,7 +41,7 @@ extern int _pommedapi_log_dom_global;
 #define WRN(...) EINA_LOG_DOM_WARN(_pommedapi_log_dom_global, __VA_ARGS__)
 #define CRI(...) EINA_LOG_DOM_CRIT(_pommedapi_log_dom_global, __VA_ARGS__)
 
-Pommedapi * pommedapi_new(const char *test, const char *html);
+Pommedapi * pommedapi_new(const char *test, const char *html, const char *filename);
 void pommedapi_free(Pommedapi *p);
 
 Eina_Bool list_filter(void *data, Eio_File *handler, const Eina_File_Direct_Info *info);

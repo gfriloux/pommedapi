@@ -46,6 +46,7 @@ end_loop:
    c = rendering_stats(r, tests, DATA_DIR"/pommedapi/templates/stats.tpl");
    EINA_SAFETY_ON_NULL_GOTO(c, free_s);
 
+   template_function_add(tpl, "$$DESCRIPTION$$", _rendering_output_strdup, (void *)r->description);
    template_function_add(tpl, "$$TESTS$$", _rendering_output_strdup, (void *)s);
    template_function_add(tpl, "$$STATS$$", _rendering_output_strdup, (void *)c);
 
@@ -56,7 +57,7 @@ end_loop:
 
    DBG("%s", p);
 
-   s = rendering_utils_strdupf("%s/index.html", r->dir);
+   s = rendering_utils_strdupf("%s/%s", r->dir, r->filename);
    EINA_SAFETY_ON_NULL_GOTO(s, free_p);
 
    ret = gfile_data_write(s, (char *)p, strlen(p));
@@ -83,18 +84,22 @@ rendering_free(
 {
    EINA_SAFETY_ON_NULL_RETURN(r);
    eina_strbuf_free(r->buf);
+   free((char *)r->description);
+   free((char *)r->filename);
    free((char *)r->dir);
    free(r);
 }
 
 Rendering *
 rendering_new(
-   const char *dir)
+   const char *directory,
+   const char *filename,
+   const char *description)
 {
    Rendering *r;
    int ret;
 
-   DBG("dir[%s]", dir);
+   DBG("directory[%s]", directory);
 
    r = calloc(1, sizeof(Rendering));
    EINA_SAFETY_ON_NULL_RETURN_VAL(r, NULL);
@@ -102,16 +107,22 @@ rendering_new(
    r->buf = eina_strbuf_new();
    EINA_SAFETY_ON_NULL_GOTO(r->buf, free_r);
 
-   r->dir = strdup(dir);
+   r->dir = strdup(directory);
    EINA_SAFETY_ON_NULL_GOTO(r->dir, free_r);
 
-   ret = access(dir, W_OK);
+   r->filename = strdup(filename);
+   EINA_SAFETY_ON_NULL_GOTO(r->filename, free_r);
+
+   r->description = strdup(description);
+   EINA_SAFETY_ON_NULL_GOTO(r->description, free_r);
+
+   ret = access(directory, W_OK);
    if (!ret) return r;
 
-   ret = access(dir, R_OK);
+   ret = access(directory, R_OK);
    EINA_SAFETY_ON_TRUE_GOTO(!ret, free_r);
 
-   ret = mkdir(dir, 0755);
+   ret = mkdir(directory, 0755);
    EINA_SAFETY_ON_TRUE_GOTO(ret, free_r);
 
    return r;

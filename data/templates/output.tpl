@@ -23,6 +23,14 @@
     </nav>
 
     <div class="content">
+      <div class="panel panel-default">
+        <div class="panel-heading">Description</div>
+          <div class="panel-body">
+            $$DESCRIPTION$$
+          </div>
+        </div>
+      </div>
+
       $$STATS$$
 
       $$TESTS$$
