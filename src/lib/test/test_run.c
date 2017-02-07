@@ -46,6 +46,16 @@ free_tr:
 }
 
 Eina_Bool
+_test_run_callback(void *data)
+{
+   Test_Run *tr = data;
+
+   tr->cb.done(tr->cb.data, tr->t);
+   test_run_free(tr);
+   return EINA_FALSE;
+}
+
+Eina_Bool
 _test_run_validate_data(
    void *data,
    int type,
@@ -76,8 +86,8 @@ _test_run_validate_del(
 
    tr->t->validate.exit_code = d->exit_code;
 
-   tr->cb.done(tr->cb.data, tr->t);
-   test_run_free(tr);
+   DBG("Ending test in %d seconds", tr->t->conf->post_delay);
+   ecore_timer_add(tr->t->conf->post_delay, _test_run_callback, tr);
    return EINA_TRUE;
 }
 

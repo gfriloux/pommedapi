@@ -20,6 +20,7 @@ static const Ecore_Getopt optdesc = {
    {
       ECORE_GETOPT_STORE_STR('t', "testdir", "Directory of tests to run."),
       ECORE_GETOPT_STORE_STR('o', "output", "Directory to use for HTML output"),
+      ECORE_GETOPT_STORE_STR('f', "filename", "Force filename of HTML file (index.html by default)"),
       ECORE_GETOPT_LICENSE('L', "license"),
       ECORE_GETOPT_COPYRIGHT('C', "copyright"),
       ECORE_GETOPT_VERSION('V', "version"),
@@ -34,7 +35,8 @@ main(
    const char **argv)
 {
    char *opt_test = NULL,
-        *opt_html = NULL;
+        *opt_html = NULL,
+        *opt_filename = NULL;
    Eina_Bool opt_quit = EINA_FALSE;
    int exit_code = 0;
    Pommedapi *p;
@@ -44,6 +46,7 @@ main(
    Ecore_Getopt_Value values[] = {
      ECORE_GETOPT_VALUE_STR (opt_test),
      ECORE_GETOPT_VALUE_STR (opt_html),
+     ECORE_GETOPT_VALUE_STR (opt_filename),
      ECORE_GETOPT_VALUE_BOOL(opt_quit),
      ECORE_GETOPT_VALUE_BOOL(opt_quit),
      ECORE_GETOPT_VALUE_BOOL(opt_quit),
@@ -62,12 +65,14 @@ main(
 
    if (opt_quit) return 0;
 
+   if (!opt_filename) opt_filename = "index.html";
+
    serialize_init();
    http_init();
    rendering_init();
    test_init();
 
-   p = pommedapi_new(opt_test, opt_html);
+   p = pommedapi_new(opt_test, opt_html, opt_filename);
    EINA_SAFETY_ON_NULL_GOTO(p, shutdown_test);
 
    eio_file_stat_ls(p->path.test, list_filter, list_main,

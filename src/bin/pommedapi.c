@@ -15,7 +15,8 @@ pommedapi_free(
 Pommedapi *
 pommedapi_new(
    const char *test,
-   const char *html)
+   const char *html,
+   const char *filename)
 {
    Pommedapi *p;
    size_t l;
@@ -43,7 +44,7 @@ pommedapi_new(
    p->conf = serialize_file_to_struct(p->path.conf, SERIALIZATION_POMMEDAPI_CONF);
    EINA_SAFETY_ON_NULL_GOTO(p->conf, free_p);
 
-   p->rendering = rendering_new(html);
+   p->rendering = rendering_new(html, filename, p->conf->description);
    EINA_SAFETY_ON_NULL_GOTO(p->rendering, free_p);
 
    return p;
