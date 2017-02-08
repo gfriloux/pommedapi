@@ -1,7 +1,5 @@
 #include <Test.h>
 #include <Http.h>
-
-#include <Gfile.h>
 #include <Generic.h>
 
 typedef struct _Test_Run
@@ -43,5 +41,4 @@ void test_run_progress(void *data, char *url_data, size_t url_size);
 void test_run_done(void *data, Http *http);
 void test_run_error(void *data, const char *error);
 
-char * test_utils_strdupf(const char *s, ...);
 float test_utils_difftime(struct timeval start, struct timeval end);

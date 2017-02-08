@@ -1,6 +1,6 @@
 #include <Rendering.h>
 #include <Template.h>
-#include <Gfile.h>
+#include <Generic.h>
 #include <Expect.h>
 
 extern int _rendering_log_dom_global;
@@ -21,5 +21,3 @@ char * rendering_test_result(void *data);
 const char * rendering_test(Rendering *r, Test *t, const char *file);
 const char * rendering_stats(Rendering *r, Eina_List *tests, const char *file);
 Eina_Bool rendering_copy(Rendering *r);
-
-char * rendering_utils_strdupf(const char *s, ...);

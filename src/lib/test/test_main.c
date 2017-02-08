@@ -80,22 +80,22 @@ test_new(
 
    t->query.name_start = info->name_start;
 
-   t->query.file = test_utils_strdupf("%s/query.json", t->query.path);
+   t->query.file = generic_strdupf("%s/query.json", t->query.path);
    EINA_SAFETY_ON_NULL_GOTO(t->query.file, free_t);
 
    t->conf = serialize_file_to_struct(t->query.file, SERIALIZATION_QUERY);
    EINA_SAFETY_ON_NULL_GOTO(t->conf, free_t);
 
-   t->query.url = test_utils_strdupf("http://%s:%d%s", host, port, t->conf->uri);
+   t->query.url = generic_strdupf("http://%s:%d%s", host, port, t->conf->uri);
    EINA_SAFETY_ON_NULL_GOTO(t->query.url, free_t);
 
-   s = test_utils_strdupf("%s/data", t->query.path);
+   s = generic_strdupf("%s/data", t->query.path);
    EINA_SAFETY_ON_NULL_GOTO(s, free_t);
    ret = access(s, R_OK);
-   if (!ret) t->query.data.data = gfile_data_read(s, &t->query.data.len);
+   if (!ret) t->query.data.data = generic_data_read(s, &t->query.data.len);
    free(s);
 
-   s = test_utils_strdupf("%s/validate", t->query.path);
+   s = generic_strdupf("%s/validate", t->query.path);
    EINA_SAFETY_ON_NULL_GOTO(s, free_t);
    ret = access(s, R_OK);
    if (!ret) t->validate.file = strdup(s);

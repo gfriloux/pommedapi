@@ -132,9 +132,9 @@ done_cb:
    tr->ev.data  = ecore_event_handler_add(ECORE_EXE_EVENT_DATA , _test_run_validate_data , tr);
    tr->ev.del   = ecore_event_handler_add(ECORE_EXE_EVENT_DEL  , _test_run_validate_del  , tr);
 
-   gfile_fd_write(tr->tmpfile.fd, eina_strbuf_string_get(tr->t->result.data.buf), eina_strbuf_length_get(tr->t->result.data.buf));
+   generic_fd_write(tr->tmpfile.fd, eina_strbuf_string_get(tr->t->result.data.buf), eina_strbuf_length_get(tr->t->result.data.buf));
 
-   cmd = test_utils_strdupf("%s '%s'", tr->t->validate.file, tr->tmpfile.path);
+   cmd = generic_strdupf("%s '%s'", tr->t->validate.file, tr->tmpfile.path);
    EINA_SAFETY_ON_NULL_GOTO(cmd, done_cb);
 
    // Running validation script.

@@ -35,8 +35,8 @@ pommedapi_new(
    p->path.html = strdup(html);
    EINA_SAFETY_ON_NULL_GOTO(p->path.html, free_p);
 
-   p->path.conf = utils_strdupf("%s%spommedapi.conf",
-                                test, test[l] == '/' ? "" : "/");
+   p->path.conf = generic_strdupf("%s%spommedapi.conf",
+                                  test, test[l] == '/' ? "" : "/");
    EINA_SAFETY_ON_NULL_GOTO(p->path.conf, free_p);
 
    DBG("p->path.test[%s] p->path.conf[%s]", p->path.test, p->path.conf);

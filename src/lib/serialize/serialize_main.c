@@ -137,7 +137,7 @@ serialize_file_to_struct(
    size_t l;
    void *data;
 
-   s = gfile_data_read(file, &l);
+   s = generic_data_read(file, &l);
    EINA_SAFETY_ON_NULL_RETURN_VAL(s, NULL);
 
    data = serialize_string_to_struct(s, l, type);
@@ -157,7 +157,7 @@ serialize_struct_to_file(
    s = serialize_struct_to_string(data, type);
    EINA_SAFETY_ON_NULL_RETURN_VAL(s, EINA_FALSE);
 
-   r = gfile_data_write(file, s, strlen(s));
+   r = generic_data_write(file, s, strlen(s));
    free(s);
    EINA_SAFETY_ON_TRUE_RETURN_VAL(!r, EINA_FALSE);
 

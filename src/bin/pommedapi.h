@@ -50,5 +50,3 @@ void list_done(void *data, Eio_File *handler);
 void list_error(void *data, Eio_File *handler, int error);
 
 void run_next(Pommedapi *p);
-
-char * utils_strdupf(const char *s, ...);

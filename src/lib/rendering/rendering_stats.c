@@ -11,7 +11,7 @@ rendering_stats_success_count(
 
    EINA_LIST_FOREACH(tests, l, t)
      if (expect_test(t) == EXPECT_SUCCESS) success++;
-   return rendering_utils_strdupf("%u", success);
+   return generic_strdupf("%u", success);
 }
 
 char *
@@ -25,7 +25,7 @@ rendering_stats_warning_count(
 
    EINA_LIST_FOREACH(tests, l, t)
      if (expect_test(t) == EXPECT_WARNING) warning++;
-   return rendering_utils_strdupf("%u", warning);
+   return generic_strdupf("%u", warning);
 }
 
 char *
@@ -39,7 +39,7 @@ rendering_stats_danger_count(
 
    EINA_LIST_FOREACH(tests, l, t)
      if (expect_test(t) == EXPECT_DANGER) danger++;
-   return rendering_utils_strdupf("%u", danger);
+   return generic_strdupf("%u", danger);
 }
 
 char *
@@ -53,7 +53,7 @@ rendering_stats_disable_count(
 
    EINA_LIST_FOREACH(tests, l, t)
      if (expect_test(t) == EXPECT_DISABLE) disabled++;
-   return rendering_utils_strdupf("%u", disabled);
+   return generic_strdupf("%u", disabled);
 }
 
 const char *
