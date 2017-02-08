@@ -8,7 +8,7 @@ BUILT_SOURCES += .sources_json
 	azy_parser -H -p -o $(top_srcdir)/src/lib/json $(top_srcdir)/src/lib/json/json.azy
 
 noinst_LTLIBRARIES = \
-   src/lib/libgfile.la \
+   src/lib/libgeneric.la \
    src/lib/libserialize.la \
    src/lib/libhttp.la \
    src/lib/libtemplate.la \
@@ -16,12 +16,12 @@ noinst_LTLIBRARIES = \
    src/lib/librendering.la \
    src/lib/libexpect.la
 
-src_lib_libgfile_la_SOURCES = \
-   src/lib/gfile/gfile_main.c \
-   src/lib/gfile/gfile_private.h \
-   src/include/Gfile.h
-src_lib_libgfile_la_CFLAGS = $(POMMEDAPI_CFLAGS) $(AM_CPPFLAGS)
-src_lib_libgfile_la_LDFLAGS = $(POMMEDAPI_LIBS)
+src_lib_libgeneric_la_SOURCES = \
+   src/lib/generic/generic_main.c \
+   src/lib/generic/generic_private.h \
+   src/include/Generic.h
+src_lib_libgeneric_la_CFLAGS = $(POMMEDAPI_CFLAGS) $(AM_CPPFLAGS)
+src_lib_libgeneric_la_LDFLAGS = $(POMMEDAPI_LIBS)
 
 src_lib_libserialize_la_SOURCES = \
    src/lib/serialize/serialize_main.c \
@@ -34,7 +34,7 @@ src_lib_libserialize_la_SOURCES = \
 src_lib_libserialize_la_CFLAGS = $(POMMEDAPI_CFLAGS) $(AM_CPPFLAGS)
 src_lib_libserialize_la_LDFLAGS = $(POMMEDAPI_LIBS)
 src_lib_libserialize_la_LIBADD = \
-   src/lib/libgfile.la
+   src/lib/libgeneric.la
 
 src_lib_libhttp_la_SOURCES = \
    src/lib/http/http_main.c \
@@ -60,14 +60,13 @@ src_lib_libtest_la_SOURCES = \
 src_lib_libtest_la_CFLAGS = $(POMMEDAPI_CFLAGS) $(AM_CPPFLAGS)
 src_lib_libtest_la_LDFLAGS = $(POMMEDAPI_LIBS)
 src_lib_libtest_la_LIBADD = \
-   src/lib/libgfile.la
+   src/lib/libgeneric.la
 
 src_lib_librendering_la_SOURCES = \
    src/lib/rendering/rendering_main.c \
    src/lib/rendering/rendering_test.c \
    src/lib/rendering/rendering_stats.c \
    src/lib/rendering/rendering_copy.c \
-   src/lib/rendering/rendering_utils.c \
    src/lib/rendering/rendering_private.h \
    src/include/Rendering.h
 src_lib_librendering_la_CFLAGS = $(POMMEDAPI_CFLAGS) $(AM_CPPFLAGS)
@@ -75,7 +74,7 @@ src_lib_librendering_la_LDFLAGS = $(POMMEDAPI_LIBS)
 src_lib_librendering_la_LIBADD = \
    src/lib/libtest.la \
    src/lib/libtemplate.la \
-   src/lib/libgfile.la \
+   src/lib/libgeneric.la \
    src/lib/libexpect.la
 
 src_lib_libexpect_la_SOURCES = \

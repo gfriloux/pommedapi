@@ -1,8 +1,7 @@
 #include <Serialize.h>
 #include <Azy.h>
 #include <Json_Common_Azy.h>
-
-#include <Gfile.h>
+#include <Generic.h>
 
 extern int _serialize_log_dom_global;
 

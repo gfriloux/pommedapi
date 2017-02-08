@@ -10,18 +10,18 @@ _rendering_copy_file(
    char *s;
    Eina_Bool r;
 
-   s = rendering_utils_strdupf("%s/%s", dst, padding);
+   s = generic_strdupf("%s/%s", dst, padding);
    EINA_SAFETY_ON_NULL_RETURN_VAL(s, EINA_FALSE);
 
    DBG("Creating %s", s);
    mkdir(s, 0755);
    free(s);
 
-   s = rendering_utils_strdupf("%s/%s%s", dst, padding, filename);
+   s = generic_strdupf("%s/%s%s", dst, padding, filename);
    EINA_SAFETY_ON_NULL_RETURN_VAL(s, EINA_FALSE);
 
    DBG("Copy [%s] to [%s]", src, s);
-   r = gfile_copy(src, s);
+   r = generic_copy(src, s);
    free(s);
    return r;
 }
@@ -33,7 +33,7 @@ _rendering_copy_create_dir(
 {
    char *s;
 
-   s = rendering_utils_strdupf("%s/%s", dir, padding);
+   s = generic_strdupf("%s/%s", dir, padding);
    EINA_SAFETY_ON_NULL_RETURN_VAL(s, EINA_FALSE);
 
    mkdir(s, 0755);

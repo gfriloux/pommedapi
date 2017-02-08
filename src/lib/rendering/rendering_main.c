@@ -57,10 +57,10 @@ end_loop:
 
    DBG("%s", p);
 
-   s = rendering_utils_strdupf("%s/%s", r->dir, r->filename);
+   s = generic_strdupf("%s/%s", r->dir, r->filename);
    EINA_SAFETY_ON_NULL_GOTO(s, free_p);
 
-   ret = gfile_data_write(s, (char *)p, strlen(p));
+   ret = generic_data_write(s, (char *)p, strlen(p));
    free((char *)p); p = NULL;
    free((char *)s);
    EINA_SAFETY_ON_TRUE_GOTO(!ret, free_tpl);

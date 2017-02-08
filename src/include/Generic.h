@@ -1,3 +1,4 @@
+#include <stddef.h>
 #include <Eina.h>
 
 #define _EINA_LIST_APPEND(_a, _b)  _a = eina_list_append(_a, _b)
@@ -15,3 +16,8 @@ _eina_list_pop(Eina_List **l)
    return data;
 }
 
+Eina_Bool generic_data_write(const char *file, const char *data, size_t size);
+char * generic_data_read(const char *file, size_t *size);
+Eina_Bool generic_copy(const char *src, const char *dest);
+Eina_Bool generic_fd_write(int fd, const char *data, size_t size);
+char * generic_strdupf(const char *s, ...);
