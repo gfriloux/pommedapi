@@ -1,5 +1,5 @@
 MAINTAINERCLEANFILES += \
-   src/lib/{gfile,json,serialize}/*.gc{no,da} \
+   src/lib/{json,serialize}/*.gc{no,da} \
    src/lib/json/Json_Common[_Azy,}.{c,h}
 
 EXTRA_DIST += src/lib/json/json.azy
