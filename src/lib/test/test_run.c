@@ -122,8 +122,8 @@ test_run_done(
    if (!tr->t->validate.file)
      {
 done_cb:
-        tr->cb.done(tr->cb.data, tr->t);
-        test_run_free(tr);
+        DBG("Ending test in %d seconds", tr->t->conf->post_delay);
+        ecore_timer_add(tr->t->conf->post_delay, _test_run_callback, tr);
         return;
      }
 
