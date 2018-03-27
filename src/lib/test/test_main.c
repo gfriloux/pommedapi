@@ -31,7 +31,7 @@ test_run(
      http_data_post(t->query.url, t->query.headers,
                     test_run_progress, test_run_done, test_run_error,
                     t->query.data.data, t->query.data.len,
-                    "application/x-www-form-urlencoded; charset=UTF-8", tr);
+                    "application/json", tr);
    else
      http_data_download(t->query.url, t->query.headers,
                         test_run_progress, test_run_done, test_run_error, tr);
