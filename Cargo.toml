@@ -1,0 +1,12 @@
+[package]
+name = "pommedapi"
+version = "2.0.0"
+authors = ["Guillaume Friloux <guillaume@friloux.me>"]
+
+[dependencies]
+serde = "*"
+serde_json = "*"
+serde_derive = "*"
+reqwest = "0.9.12"
+getopts = "0.2"
+tempfile = "*"

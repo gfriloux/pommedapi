@@ -1,8 +1,0 @@
-#!/usr/bin/env bash
-
-. /usr/local/share/pommedapi/functions.sh
-
-jq_assert_val "${1}" ".message" "622 - All The Fucks"
-jq_assert_val "${1}" ".subtitle" "Server invites you to consider the truly monumental amount of fucks it couldn't give about your request."
-
-exit 0

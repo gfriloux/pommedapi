@@ -2,7 +2,7 @@
 
 . /usr/local/share/pommedapi/functions.sh
 
-jq_assert_val "${1}" ".message" "Version 1.1.0"
+jq_assert_val "${1}" ".message" "Version 2.0.0"
 jq_assert_val "${1}" ".subtitle" "FOAAS"
 
 exit 0
