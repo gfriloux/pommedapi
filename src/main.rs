@@ -6,6 +6,7 @@ extern crate tempfile;
 
 mod config;
 mod pommedapi;
+mod query;
 
 use getopts::Options;
 use std::env;
