@@ -1,5 +1,5 @@
 
-#[derive(Clone)]
+#[derive(Serialize, Deserialize, Clone)]
 pub struct Config {
    pub directory: String,
    pub output:    String,

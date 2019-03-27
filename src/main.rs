@@ -3,17 +3,20 @@ extern crate getopts;
 extern crate serde_json;
 extern crate reqwest;
 extern crate tempfile;
+extern crate handlebars;
 
 mod config;
 mod pommedapi;
 mod query;
 mod validate;
+mod render;
 
 use getopts::Options;
 use std::env;
 
 use config::Config;
 use pommedapi::Pommedapi;
+use render::Render;
 
 fn usage(program: &str, opts: Options) {
    let brief = format!("Usage: {} [options]", program);
@@ -26,6 +29,7 @@ fn main() {
    let     program           = args[0].clone();
    let     config: Config;
    let mut pomme;
+   let mut render;
 
    opts.optopt ("t", "testdir",  "Directory of tests to run.",                          "NAME");
    opts.optopt ("o", "output",   "Directory to use for HTML output.",                   "NAME");
@@ -49,6 +53,9 @@ fn main() {
 
    println!("{}", config);
 
-   pomme = Pommedapi::new(config);
+   pomme  = Pommedapi::new(config);
    pomme.run();
+
+   render = Render::new(pomme, "data/templates/template.hbs").unwrap();
+   println!("{}", render.run().unwrap());
 }

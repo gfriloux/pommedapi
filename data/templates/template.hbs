@@ -1,0 +1,126 @@
+<!doctype html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta charset="utf-8">
+    <title>Pommedapi</title>
+    <link href="data/css/bootstrap.min.css" rel="stylesheet">
+    <link href="data/css/monokai-sublime.css" rel="stylesheet">
+  </head>
+  <body>
+    <div class="container">
+    <nav class="navbar navbar-default" role="navigation">
+      <div class="container-fluid">
+        <div class="navbar-header">
+          <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+            <span class="sr-only">Toggle navigation</span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </button>
+          <a class="navbar-brand" href="">Pommedapi's Results</a>
+        </div>
+      </div>
+    </nav>
+
+    <div class="content">
+      <div class="panel panel-default">
+        <div class="panel-heading">Description</div>
+          <div class="panel-body">
+            $$DESCRIPTION$$
+          </div>
+        </div>
+      </div>
+
+      <div class="panel panel-default">
+        <div class="panel-heading">Stats</div>
+          <div class="panel-body">
+            <button type="button" class="btn btn-lg btn-success">
+              <span class="glyphicon glyphicon-thumbs-up" aria-hidden="true"></span>&nbsp;&nbsp;{{stats.success}}
+            </button>
+
+            <button type="button" class="btn btn-lg btn-warning">
+              <span class="glyphicon glyphicon-warning-sign" aria-hidden="true"></span>&nbsp;&nbsp;{{stats.warning}}
+            </button>
+
+            <button type="button" class="btn btn-lg btn-danger">
+              <span class="glyphicon glyphicon-remove-sign" aria-hidden="true"></span>&nbsp;&nbsp;{{stats.danger}}
+            </button>
+
+            <button type="button" class="btn btn-lg btn-default">
+              <span class="glyphicon glyphicon-eye-close" aria-hidden="true"></span>&nbsp;&nbsp;{{stats.disable}}
+            </button>
+          </div>
+        </div>
+
+{{#each queries}}
+<div class="panel panel-{{disable_to_class disabled}}>
+  <div class="panel-heading">
+    <h3 class="panel-title">{{id}} - {{uri}}</h3>
+  </div>
+  <div class="panel-body">
+    <button type="button" class="btn {{code_to_class validation.http_code}} btn-xs">
+      <span class="glyphicon glyphicon-record" aria-hidden="true"></span>
+      {{result.http_code}}
+    </button>
+
+    <button type="button" class="btn {{code_to_class validation.latency}} btn-xs">
+      <span class="glyphicon glyphicon-record" aria-hidden="true"></span>
+      {{result.latency}}
+    </button>
+
+    <button type="button" class="btn {{code_to_class validation.data}} btn-xs">
+      <span class="glyphicon glyphicon-record" aria-hidden="true"></span>
+      {{result.size}}
+    </button>
+
+    <br /><br />
+    <ul class="nav nav-tabs">
+      <li class="active"><a href="#{{id}}_desc" data-toggle="tab" aria-expanded="true">Description</a></li>
+      <li class=""><a href="#{{id}}_sent" data-toggle="tab" aria-expanded="false">Sent data</a></li>
+      <li class=""><a href="#{{id}}_received" data-toggle="tab" aria-expanded="false">Received data</a></li>
+      <li class=""><a href="#{{id}}_validation" data-toggle="tab" aria-expanded="false">Validation data</a></li>
+    </ul>
+    <div id="myTabContent" class="tab-content">
+      <div class="tab-pane fade active in" id="{{id}}_desc">
+        <menu>
+          {{description}}
+          <br />
+          {{#unless disabled}}
+            <h3>Expected results</h3>
+            <ul>
+              {{#if expect.http_code}}
+              <li>http code = {{expect.http_code}}</li>
+              {{/if}}
+              {{#if expect.time}}
+              <li>time < {{expect.time}}ms
+              {{/if}}
+              {{#if expect.data}}
+              <li>Returned data validation</li>
+              {{/if}}
+            </ul>
+          {{/unless}}
+        </menu>
+      </div>
+      <div class="tab-pane fade in" id="{{id}}_sent">
+        <pre><code class="json">$$QUERY$$</code></pre>
+      </div>
+      <div class="tab-pane fade in" id="{{id}}_received">
+        <pre><code class="json">{{result.data}}</code></pre>
+      </div>
+      <div class="tab-pane fade in" id="{{id}}_validation">
+        <pre><code class="json">{{validation.output}}</code></pre>
+      </div>
+    </div>
+  </div>
+</div>
+{{/each}}
+
+    </div>
+  </body>
+  <script src="data/js/jquery.min.js"></script>
+  <script src="data/js/bootstrap.min.js"></script>
+  <script src="data/js/highlight.min.js"></script>
+  <script type="text/javascript">
+    hljs.initHighlightingOnLoad();
+  </script>
+</html>

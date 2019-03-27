@@ -7,6 +7,8 @@ use reqwest::header::HeaderMap;
 use reqwest::header::HeaderValue;
 use reqwest::header::HeaderName;
 
+use validate::Validation;
+
 #[derive(Serialize, Deserialize)]
 pub struct QueryHeader {
    name:        String,
@@ -15,13 +17,13 @@ pub struct QueryHeader {
 
 #[derive(Serialize, Deserialize)]
 pub struct QueryExpect {
-   pub time:        u128,
+   pub time:        u64,
    pub http_code:   u16
 }
 
 #[derive(Serialize, Deserialize)]
 pub struct QueryResult {
-   pub time:        u128,
+   pub time:        u64,
    pub http_code:   u16,
    pub data:        String
 }
@@ -42,7 +44,12 @@ pub struct Query {
    #[serde(skip_serializing, skip_deserializing)]
    pub base_dir:    String,
 
-   pub result:       Option<QueryResult>,
+   #[serde(skip_deserializing)]
+   pub id:          String,
+
+   pub result:      Option<QueryResult>,
+
+   pub validation:  Option<Validation>
 }
 
 impl std::fmt::Display for Query {
@@ -55,7 +62,7 @@ impl std::fmt::Display for Query {
 
 
 impl Query {
-   pub fn load(base_dir: &str, base_uri: &str) -> Result<Query, &'static str> {
+   pub fn load(id: &str, base_dir: &str, base_uri: &str) -> Result<Query, &'static str> {
       let mut data       = String::new();
       let mut obj: Query;
       let     file       = format!("{}/query.json", base_dir);
@@ -64,6 +71,7 @@ impl Query {
       fd.read_to_string(&mut data).unwrap();
 
       obj = serde_json::from_str(data.as_str()).unwrap();
+      obj.id       = id.to_string();
       obj.base_uri = base_uri.to_string();
       obj.base_dir = base_dir.to_string();
       Ok(obj)
@@ -106,7 +114,7 @@ impl Query {
             //println!("Result = {:?}", e);
             // We need to set a few results
             delay            = now.elapsed().unwrap();
-            result.time      = delay.as_millis();
+            result.time      = delay.as_millis() as u64;
             result.http_code = e.status().as_u16();
             result.data      = e.text().unwrap_or("".to_string());
             self.result = Some(result);
