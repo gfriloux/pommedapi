@@ -1,5 +1,6 @@
 use std::fs::File;
 use std::io::Read;
+use std::path::Path;
 use std::time::{Duration, SystemTime};
 
 use reqwest::ClientBuilder;
@@ -47,6 +48,9 @@ pub struct Query {
    #[serde(skip_deserializing)]
    pub id:          String,
 
+   #[serde(skip_deserializing)]
+   pub data:        String,
+
    pub result:      Option<QueryResult>,
 
    pub validation:  Option<Validation>
@@ -72,6 +76,7 @@ impl Query {
 
       obj = serde_json::from_str(data.as_str()).unwrap();
       obj.id       = id.to_string();
+      obj.data     = "".to_string();
       obj.base_uri = base_uri.to_string();
       obj.base_dir = base_dir.to_string();
       Ok(obj)
@@ -84,6 +89,7 @@ impl Query {
       let mut headers = HeaderMap::new();
       let     now;
       let     delay;
+      let     data;
 
       println!("{}", self);
 
@@ -94,7 +100,22 @@ impl Query {
       clientbuilder = ClientBuilder::new();
       clientbuilder = clientbuilder.timeout(Some(Duration::from_secs(self.timeout)));
       client        = clientbuilder.build().unwrap();
-      query         = client.get(&format!("{}{}", self.base_uri, self.uri));
+
+      data = format!("{}/data", self.base_dir);
+
+      if Path::new(&data).exists() {
+         let mut fd   = File::open(data).unwrap();
+         let mut data = String::new();
+
+         fd.read_to_string(&mut data).unwrap();
+
+         query      = client.post(&format!("{}{}", self.base_uri, self.uri));
+         query      = query.body(data.clone());
+         self.data  = data;
+      }
+      else {
+         query      = client.get(&format!("{}{}", self.base_uri, self.uri));
+      }
 
       for header in &self.headers {
          headers.insert(HeaderName::from_bytes(header.name.as_bytes()).unwrap(),

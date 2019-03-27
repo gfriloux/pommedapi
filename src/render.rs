@@ -1,9 +1,6 @@
 use std::path::Path;
 use handlebars::{Handlebars, Helper, RenderContext, RenderError};
 
-use query::Query;
-use validate::{Validation, ValidationCode};
-
 use pommedapi::Pommedapi;
 
 

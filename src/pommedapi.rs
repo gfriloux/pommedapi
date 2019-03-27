@@ -75,11 +75,9 @@ impl Pommedapi {
          }
 
          filepath = format!("{}", entry.path().display());
-         //println!("{}", filepath);
 
          query = Query::load(entry.file_name().to_str().unwrap_or(""), &filepath, &self.conf.host).unwrap();
          query.run().unwrap();
-
 
          validation = Validation::validate(&query).unwrap();
          println!("Validation : {}", validation);
