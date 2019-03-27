@@ -1,13 +1,11 @@
 use std::fs::File;
-use std::io::{Read, Write};
+use std::io::Read;
 use std::time::{Duration, SystemTime};
-use std::process::Command;
 
 use reqwest::ClientBuilder;
 use reqwest::header::HeaderMap;
 use reqwest::header::HeaderValue;
 use reqwest::header::HeaderName;
-use tempfile::NamedTempFile;
 
 #[derive(Serialize, Deserialize)]
 pub struct QueryHeader {
@@ -17,31 +15,34 @@ pub struct QueryHeader {
 
 #[derive(Serialize, Deserialize)]
 pub struct QueryExpect {
-   time:        u128,
-   http_code:   u16
+   pub time:        u128,
+   pub http_code:   u16
 }
 
 #[derive(Serialize, Deserialize)]
 pub struct QueryResult {
-   time:        u128,
-   http_code:   u16,
-   data:        String
+   pub time:        u128,
+   pub http_code:   u16,
+   pub data:        String
 }
 
 #[derive(Serialize, Deserialize)]
 pub struct Query {
-   uri:         String,
-   description: String,
-   disabled:    Option<bool>,
-   headers:     Vec<QueryHeader>,
-   timeout:     u64,
-   post_delay:  Option<u16>,
-   expect:      QueryExpect,
+   pub uri:         String,
+   pub description: String,
+   pub disabled:    Option<bool>,
+   pub headers:     Vec<QueryHeader>,
+   pub timeout:     u64,
+   pub post_delay:  Option<u16>,
+   pub expect:      QueryExpect,
 
    #[serde(skip_serializing, skip_deserializing)]
-   base_uri:    String,
+   pub base_uri:    String,
 
-   query:       Option<QueryResult>,
+   #[serde(skip_serializing, skip_deserializing)]
+   pub base_dir:    String,
+
+   pub result:       Option<QueryResult>,
 }
 
 impl std::fmt::Display for Query {
@@ -54,15 +55,17 @@ impl std::fmt::Display for Query {
 
 
 impl Query {
-   pub fn load(file: &str, base_uri: &str) -> Result<Query, &'static str> {
+   pub fn load(base_dir: &str, base_uri: &str) -> Result<Query, &'static str> {
       let mut data       = String::new();
       let mut obj: Query;
+      let     file       = format!("{}/query.json", base_dir);
       let mut fd         = File::open(file).unwrap();
 
       fd.read_to_string(&mut data).unwrap();
 
       obj = serde_json::from_str(data.as_str()).unwrap();
       obj.base_uri = base_uri.to_string();
+      obj.base_dir = base_dir.to_string();
       Ok(obj)
    }
 
@@ -92,6 +95,7 @@ impl Query {
       query         = query.headers(headers);
 
       now = SystemTime::now();
+
       match query.send() {
          Ok (mut e) => {
             let mut result = QueryResult {
@@ -99,54 +103,19 @@ impl Query {
                http_code: 0,
                data: String::new()
             };
-            println!("Result = {:?}", e);
+            //println!("Result = {:?}", e);
             // We need to set a few results
             delay            = now.elapsed().unwrap();
             result.time      = delay.as_millis();
             result.http_code = e.status().as_u16();
             result.data      = e.text().unwrap_or("".to_string());
-            self.query = Some(result);
+            self.result = Some(result);
          },
          Err(x) => {
             println!("Server return http {:?} error code", x.status());
             println!("{:?}", x);
          }
       };
-      Ok(())
-   }
-
-   pub fn validate(&mut self, command: &str) -> Result<(), &'static str> {
-      let     file     = NamedTempFile::new().unwrap();
-      let     filename = format!("{}", file.path().display());
-      let     output;
-      let     stdout;
-      let     stderr;
-
-      println!("Creating file {}", filename);
-      let mut f = File::create(&filename).unwrap();
-
-      if let Some(ref x) = self.query {
-         println!("Writing:\n{}", x.data);
-         f.write_all(x.data.as_bytes()).unwrap();
-         f.sync_all().unwrap();
-      }
-      else {
-         return Ok(());
-      }
-
-      println!("Executing {} to validate file {}", command, filename);
-
-      output = Command::new(command).arg(filename).output().expect("Failed to execute process");
-
-      stdout = String::from_utf8(output.stdout).unwrap();
-      stderr = String::from_utf8(output.stderr).unwrap();
-      println!("stdout:\n{}", stdout);
-      println!("stderr:\n{}", stderr);
-
-      if ! output.status.success() {
-         return Err("Failed to validate data");
-      }
-
       Ok(())
    }
 }

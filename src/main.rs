@@ -7,6 +7,7 @@ extern crate tempfile;
 mod config;
 mod pommedapi;
 mod query;
+mod validate;
 
 use getopts::Options;
 use std::env;

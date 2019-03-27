@@ -3,6 +3,7 @@ use std::io::Read;
 
 use config::Config;
 use query::Query;
+use validate::Validation;
 
 #[derive(Serialize, Deserialize)]
 pub struct PommedapiConf {
@@ -46,20 +47,23 @@ impl Pommedapi {
 
       for entry in v {
          let mut query;
+         let mut validation;
          let     filepath;
 
          if ! entry.file_type().unwrap().is_dir() {
             continue;
          }
 
-         filepath = format!("{}/query.json", entry.path().display());
+         filepath = format!("{}", entry.path().display());
          println!("{}", filepath);
 
          query = Query::load(&filepath, &self.conf.host).unwrap();
 
          query.run().unwrap();
 
-         query.validate(&format!("{}/validate", entry.path().display())).unwrap();
+         validation = Validation::validate(&query).unwrap();
+
+         println!("Validation : {}", validation);
       }
    }
 }
