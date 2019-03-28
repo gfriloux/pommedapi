@@ -71,11 +71,11 @@ impl Query {
       let mut data       = String::new();
       let mut obj: Query;
       let     file       = format!("{}/query.json", base_dir);
-      let mut fd         = File::open(file).unwrap();
+      let mut fd         = safety_on_res_return!(File::open(file));
 
-      fd.read_to_string(&mut data).unwrap();
+      safety_on_res_return!(fd.read_to_string(&mut data));
 
-      obj = serde_json::from_str(data.as_str()).unwrap();
+      obj = safety_on_res_return!(serde_json::from_str(data.as_str()));
       obj.id       = id.to_string();
       obj.data     = "".to_string();
       obj.base_uri = base_uri.to_string();
@@ -100,15 +100,15 @@ impl Query {
 
       clientbuilder = ClientBuilder::new();
       clientbuilder = clientbuilder.timeout(Some(Duration::from_secs(self.timeout)));
-      client        = clientbuilder.build().unwrap();
+      client        = safety_on_res_return!(clientbuilder.build());
 
       data = format!("{}/data", self.base_dir);
 
       if Path::new(&data).exists() {
-         let mut fd   = File::open(data).unwrap();
+         let mut fd   = safety_on_res_return!(File::open(data));
          let mut data = String::new();
 
-         fd.read_to_string(&mut data).unwrap();
+         safety_on_res_return!(fd.read_to_string(&mut data));
 
          query      = client.post(&format!("{}{}", self.base_uri, self.uri));
          query      = query.body(data.clone());
@@ -119,8 +119,9 @@ impl Query {
       }
 
       for header in &self.headers {
-         headers.insert(HeaderName::from_bytes(header.name.as_bytes()).unwrap(),
-                        HeaderValue::from_str(header.value.as_str()).unwrap());
+         headers.insert(
+            HeaderName::from_bytes(header.name.as_bytes()).unwrap(),
+            HeaderValue::from_str(header.value.as_str()).unwrap());
       }
       query         = query.headers(headers);
 
@@ -136,7 +137,7 @@ impl Query {
             };
             //println!("Result = {:?}", e);
             // We need to set a few results
-            delay            = now.elapsed().unwrap();
+            delay            = safety_on_res_return!(now.elapsed());
             result.time      = delay.as_millis() as u64;
             result.http_code = e.status().as_u16();
             result.data      = e.text().unwrap_or("".to_string());

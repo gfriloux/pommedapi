@@ -13,7 +13,7 @@ impl Render {
    pub fn new(pomme: Pommedapi, template: &str) -> Result<Render, &'static str> {
       let mut hb = Handlebars::new();
 
-      hb.register_template_file("html", &Path::new(template)).unwrap();
+      safety_on_res_return!(hb.register_template_file("html", &Path::new(template)));
       Render::render_playloads(&mut hb);
 
       Ok(Render {
@@ -29,7 +29,8 @@ impl Render {
 
 
    pub fn run(&mut self) -> Result<String, &'static str> {
-      Ok(self.hb.render("html", &self.pomme,).unwrap())
+      let s = safety_on_res_return!(self.hb.render("html", &self.pomme,));
+      Ok(s)
    }
 }
 

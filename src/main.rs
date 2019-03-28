@@ -6,6 +6,7 @@ extern crate tempfile;
 extern crate handlebars;
 extern crate fs_extra;
 
+#[macro_use] mod macros;
 mod config;
 mod pommedapi;
 mod query;
@@ -62,20 +63,20 @@ fn main() {
    println!("{}", config);
 
    pomme  = Pommedapi::new(config);
-   pomme.run();
+   safety_on_res_return_silent!(pomme.run());
 
-   render = Render::new(pomme, "data/templates/template.hbs").unwrap();
-   s      = render.run().unwrap();
+   render = safety_on_res_return_silent!(Render::new(pomme, "/usr/local/share/pommedapi/templates/template.hbs"));
+   s      = safety_on_res_return_silent!(render.run());
 
    // Save output
    println!("Checking {}", render.pomme.param.output);
    if ! Path::new(&render.pomme.param.output).exists() {
-      fs::create_dir(&render.pomme.param.output).unwrap();
+      safety_on_res_return_silent!(fs::create_dir(&render.pomme.param.output));
    }
 
    let datadir = format!("{}/data", render.pomme.param.output);
    if ! Path::new(&datadir).exists() {
-      fs::create_dir(&datadir).unwrap();
+      safety_on_res_return_silent!(fs::create_dir(&datadir));
    }
 
    let mut options = CopyOptions::new();
@@ -87,12 +88,11 @@ fn main() {
    files.push("/usr/local/share/pommedapi/js");
    files.push("/usr/local/share/pommedapi/fonts");
 
-   copy_items(&files, &datadir, &options).unwrap();
+   safety_on_res_return_silent!(copy_items(&files, &datadir, &options));
 
-   let mut f = File::create(&format!("{}/{}",
-                                     render.pomme.param.output,
-                                     render.pomme.param.filename)
-                           ).unwrap();
-   f.write_all(s.as_bytes()).unwrap();
-   f.sync_all().unwrap();
+   let mut f = safety_on_res_return_silent!(File::create(&format!("{}/{}",
+                                                                  render.pomme.param.output,
+                                                                  render.pomme.param.filename)));
+   safety_on_res_return_silent!(f.write_all(s.as_bytes()));
+   safety_on_res_return_silent!(f.sync_all());
 }

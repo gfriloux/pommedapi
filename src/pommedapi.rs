@@ -31,11 +31,11 @@ impl PommedapiConf {
    pub fn load(file: &str) -> Result<PommedapiConf, &'static str> {
       let mut data                = String::new();
       let     obj: PommedapiConf;
-      let mut fd                  = File::open(file).unwrap();
+      let mut fd                  = safety_on_res_return!(File::open(file));
 
-      fd.read_to_string(&mut data).unwrap();
+      safety_on_res_return!(fd.read_to_string(&mut data));
 
-      obj = serde_json::from_str(data.as_str()).unwrap();
+      obj = safety_on_res_return!(serde_json::from_str(data.as_str()));
       Ok(obj)
    }
 }
@@ -80,7 +80,7 @@ impl Pommedapi {
       }
    }
 
-   pub fn run(&mut self) {
+   pub fn run(&mut self) -> Result<(), &'static str> {
       let files = fs::read_dir(&self.param.directory).unwrap();
       let mut v: Vec<_>;
 
@@ -98,10 +98,11 @@ impl Pommedapi {
 
          filepath = format!("{}", entry.path().display());
 
-         query = Query::load(entry.file_name().to_str().unwrap_or(""), &filepath, &self.conf.host).unwrap();
-         query.run().unwrap();
+         query = safety_on_res_return!(Query::load(entry.file_name().to_str().unwrap_or(""),
+                                                   &filepath, &self.conf.host));
+         safety_on_res_return!(query.run());
 
-         validation = Validation::validate(&query).unwrap();
+         validation = safety_on_res_return!(Validation::validate(&query));
          println!("Validation : {}", validation);
 
          query.validation = Some(validation);
@@ -109,5 +110,6 @@ impl Pommedapi {
          self.stat_update(&query);
          self.queries.push(query);
       }
+      Ok(())
    }
 }

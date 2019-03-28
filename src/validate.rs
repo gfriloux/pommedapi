@@ -1,5 +1,6 @@
 use std::fs::File;
 use std::io::Write;
+use std::path::Path;
 use std::process::Command;
 use tempfile::NamedTempFile;
 
@@ -73,7 +74,7 @@ impl Validation {
    }
 
    pub fn script(&mut self, query: &Query) -> Result<(), &'static str> {
-      let     file     = NamedTempFile::new().unwrap();
+      let     file     = safety_on_res_return!(NamedTempFile::new());
       let     filename = format!("{}", file.path().display());
       let     command  = format!("{}/validate", query.base_dir);
       let     output;
@@ -83,11 +84,16 @@ impl Validation {
          return Ok(());
       }
 
-      let mut f = File::create(&filename).unwrap();
+      if ! Path::new(&command).exists() {
+         self.data = ValidationCode::Disable;
+         return Ok(());
+      }
+
+      let mut f = safety_on_res_return!(File::create(&filename));
 
       if let Some(ref x) = query.result{
-         f.write_all(x.data.as_bytes()).unwrap();
-         f.sync_all().unwrap();
+         safety_on_res_return!(f.write_all(x.data.as_bytes()));
+         safety_on_res_return!(f.sync_all());
       }
       else {
          self.data = ValidationCode::Disable;
@@ -96,9 +102,8 @@ impl Validation {
 
       //println!("Executing {} to validate file {}", command, filename);
 
-      output = Command::new(command).arg(filename).output().expect("Failed to execute process");
-
-      self.output = String::from_utf8(output.stdout).unwrap();
+      output = safety_on_res_return!(Command::new(command).arg(filename).output());
+      self.output = safety_on_res_return!(String::from_utf8(output.stdout));
 
       if ! output.status.success() {
          self.data = ValidationCode::Danger;
@@ -116,9 +121,10 @@ impl Validation {
          data:       ValidationCode::Disable,
          output:     String::new()
       };
-      validation.script(query).unwrap();
-      validation.latency(query).unwrap();
-      validation.httpcode(query).unwrap();
+
+      safety_on_res_return!(validation.script(query));
+      safety_on_res_return!(validation.latency(query));
+      safety_on_res_return!(validation.httpcode(query));
 
       Ok(validation)
    }
