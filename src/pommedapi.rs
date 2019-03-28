@@ -8,7 +8,6 @@ use validate::{Validation,ValidationCode};
 #[derive(Serialize, Deserialize)]
 pub struct PommedapiConf {
    host:        String,
-   port:        u16,
    description: Option<String>
 }
 
