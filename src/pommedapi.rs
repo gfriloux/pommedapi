@@ -22,12 +22,10 @@ pub struct PommedapiStats {
 
 #[derive(Serialize, Deserialize)]
 pub struct Pommedapi {
-   param:       Config,
-   conf:        PommedapiConf,
-
-   queries:     Vec<Query>,
-
-   stats:       PommedapiStats
+   pub param:       Config,
+   pub conf:        PommedapiConf,
+   pub queries:     Vec<Query>,
+   pub stats:       PommedapiStats
 }
 
 impl PommedapiConf {

@@ -11,7 +11,7 @@ impl Config {
       Config {
          directory: directory.unwrap_or("pommedapi".to_string()),
          output:    output.unwrap_or("html".to_string()),
-         filename:  filename.unwrap_or("filename".to_string())
+         filename:  filename.unwrap_or("index.html".to_string())
       }
    }
 }
