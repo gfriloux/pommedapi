@@ -5,7 +5,7 @@ use tempfile::NamedTempFile;
 
 use query::Query;
 
-#[derive(Serialize, Deserialize)]
+#[derive(Serialize, Deserialize, PartialEq, Clone)]
 pub enum ValidationCode {
    Disable,
    Success,
@@ -121,6 +121,34 @@ impl Validation {
       validation.httpcode(query).unwrap();
 
       Ok(validation)
+   }
+}
+
+impl ValidationCode {
+   pub fn worst(&self, val: &ValidationCode) -> ValidationCode {
+      match self {
+         ValidationCode::Disable => {
+            if self != val {
+               return val.clone();
+            }
+            return ValidationCode::Disable;
+         },
+         ValidationCode::Success => {
+            if val == &ValidationCode::Disable {
+               return ValidationCode::Success;
+            }
+            return val.clone();
+         },
+         ValidationCode::Warning => {
+            if val == &ValidationCode::Danger {
+               return ValidationCode::Danger;
+            }
+            return ValidationCode::Warning;
+         },
+         ValidationCode::Danger  => {
+            return ValidationCode::Danger;
+         }
+      };
    }
 }
 

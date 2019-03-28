@@ -37,11 +37,11 @@ fn disable_to_class (h: &Helper, _: &Handlebars, rc: &mut RenderContext) -> Resu
    let val = h.param(0,).and_then(|v| v.value().as_bool()).unwrap_or(false) as bool;
    let s;
 
-   if ! val {
-      s = "btn-default";
+   if val == true {
+      s = "default";
    }
    else {
-      s = "btn-primary";
+      s = "primary";
    }
    try!(rc.writer.write_all(s.as_bytes()));
    Ok(())
@@ -55,19 +55,19 @@ fn code_to_class(h: &Helper, _: &Handlebars, rc: &mut RenderContext) -> Result<(
 
    s = match val {
       "Disable" => {
-         "btn-default".to_string()
+         "default".to_string()
       },
       "Success" => {
-         "btn-success".to_string()
+         "success".to_string()
       },
       "Warning" => {
-         "btn-warning".to_string()
+         "warning".to_string()
       },
       "Danger"  => {
-         "btn-danger".to_string()
+         "danger".to_string()
       },
       _         => {
-         "btn-default".to_string()
+         "default".to_string()
       }
    };
 

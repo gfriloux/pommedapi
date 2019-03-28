@@ -66,7 +66,6 @@ fn main() {
 
    render = Render::new(pomme, "data/templates/template.hbs").unwrap();
    s      = render.run().unwrap();
-   println!("{}", s);
 
    // Save output
    println!("Checking {}", render.pomme.param.output);
@@ -79,7 +78,6 @@ fn main() {
       fs::create_dir(&datadir).unwrap();
    }
 
-
    let mut options = CopyOptions::new();
    options.overwrite = true;
 
@@ -91,7 +89,10 @@ fn main() {
 
    copy_items(&files, &datadir, &options).unwrap();
 
-   let mut f = File::create(&format!("{}/{}", render.pomme.param.output, render.pomme.param.filename)).unwrap();
+   let mut f = File::create(&format!("{}/{}",
+                                     render.pomme.param.output,
+                                     render.pomme.param.filename)
+                           ).unwrap();
    f.write_all(s.as_bytes()).unwrap();
    f.sync_all().unwrap();
 }

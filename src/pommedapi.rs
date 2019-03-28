@@ -3,7 +3,7 @@ use std::io::Read;
 
 use config::Config;
 use query::Query;
-use validate::Validation;
+use validate::{Validation,ValidationCode};
 
 #[derive(Serialize, Deserialize)]
 pub struct PommedapiConf {
@@ -22,10 +22,10 @@ pub struct PommedapiStats {
 
 #[derive(Serialize, Deserialize)]
 pub struct Pommedapi {
-   pub param:       Config,
-   pub conf:        PommedapiConf,
-   pub queries:     Vec<Query>,
-   pub stats:       PommedapiStats
+   pub param:   Config,
+   pub conf:    PommedapiConf,
+   pub queries: Vec<Query>,
+   pub stats:   PommedapiStats
 }
 
 impl PommedapiConf {
@@ -56,11 +56,36 @@ impl Pommedapi {
       }
    }
 
+   pub fn stat_update(&mut self, query: &Query) {
+      let mut global_code = ValidationCode::Disable;
+
+      if let Some(ref x) = query.validation {
+         global_code = global_code.worst(&x.http_code);
+         global_code = global_code.worst(&x.latency);
+         global_code = global_code.worst(&x.data);
+      }
+
+      match global_code {
+         ValidationCode::Disable => {
+            self.stats.disable += 1;
+         },
+         ValidationCode::Success => {
+            self.stats.success += 1;
+         },
+         ValidationCode::Warning => {
+            self.stats.warning += 1;
+         },
+         ValidationCode::Danger  => {
+            self.stats.danger  += 1;
+         }
+      }
+   }
+
    pub fn run(&mut self) {
       let files = fs::read_dir(&self.param.directory).unwrap();
       let mut v: Vec<_>;
 
-      v = files.map(|r| r.unwrap()).collect();
+      v = files.map(|r|   r.unwrap()).collect();
       v.sort_by_key(|dir| dir.path());
 
       for entry in v {
@@ -82,6 +107,7 @@ impl Pommedapi {
 
          query.validation = Some(validation);
 
+         self.stat_update(&query);
          self.queries.push(query);
       }
    }

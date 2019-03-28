@@ -23,13 +23,15 @@
     </nav>
 
     <div class="content">
+    {{#if conf.description}}
       <div class="panel panel-default">
         <div class="panel-heading">Description</div>
           <div class="panel-body">
-            $$DESCRIPTION$$
+            {{{conf.description}}}
           </div>
         </div>
       </div>
+    {{/if}}
 
       <div class="panel panel-default">
         <div class="panel-heading">Stats</div>
@@ -53,24 +55,24 @@
         </div>
 
 {{#each queries}}
-<div class="panel panel-{{disable_to_class disabled}}>
+<div class="panel panel-{{disable_to_class disabled}}">
   <div class="panel-heading">
     <h3 class="panel-title">{{id}} - {{uri}}</h3>
   </div>
   <div class="panel-body">
-    <button type="button" class="btn {{code_to_class validation.http_code}} btn-xs">
+    <button type="button" class="btn btn-{{code_to_class validation.http_code}} btn-xs">
       <span class="glyphicon glyphicon-record" aria-hidden="true"></span>
       {{result.http_code}}
     </button>
 
-    <button type="button" class="btn {{code_to_class validation.latency}} btn-xs">
-      <span class="glyphicon glyphicon-record" aria-hidden="true"></span>
-      {{result.latency}}
+    <button type="button" class="btn btn-{{code_to_class validation.latency}} btn-xs">
+      <span class="glyphicon glyphicon-hourglass" aria-hidden="true"></span>
+      {{result.time}}MS
     </button>
 
-    <button type="button" class="btn {{code_to_class validation.data}} btn-xs">
-      <span class="glyphicon glyphicon-record" aria-hidden="true"></span>
-      {{result.size}}
+    <button type="button" class="btn btn-{{code_to_class validation.data}} btn-xs">
+      <span class="glyphicon glyphicon-download" aria-hidden="true"></span>
+      {{result.size}}BYTES
     </button>
 
     <br /><br />
@@ -83,7 +85,7 @@
     <div id="myTabContent" class="tab-content">
       <div class="tab-pane fade active in" id="{{id}}_desc">
         <menu>
-          {{description}}
+          {{{description}}}
           <br />
           {{#unless disabled}}
             <h3>Expected results</h3>
@@ -94,7 +96,7 @@
               {{#if expect.time}}
               <li>time < {{expect.time}}ms
               {{/if}}
-              {{#if expect.data}}
+              {{#if validation.output}}
               <li>Returned data validation</li>
               {{/if}}
             </ul>

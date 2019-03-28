@@ -26,7 +26,8 @@ pub struct QueryExpect {
 pub struct QueryResult {
    pub time:        u64,
    pub http_code:   u16,
-   pub data:        String
+   pub data:        String,
+   pub size:        usize
 }
 
 #[derive(Serialize, Deserialize)]
@@ -130,7 +131,8 @@ impl Query {
             let mut result = QueryResult {
                time: 0,
                http_code: 0,
-               data: String::new()
+               data: String::new(),
+               size: 0
             };
             //println!("Result = {:?}", e);
             // We need to set a few results
@@ -138,6 +140,7 @@ impl Query {
             result.time      = delay.as_millis() as u64;
             result.http_code = e.status().as_u16();
             result.data      = e.text().unwrap_or("".to_string());
+            result.size      = result.data.len();
             self.result = Some(result);
          },
          Err(x) => {
