@@ -5,6 +5,7 @@ extern crate reqwest;
 extern crate tempfile;
 extern crate handlebars;
 extern crate fs_extra;
+extern crate indicatif;
 
 #[macro_use] mod macros;
 mod config;
