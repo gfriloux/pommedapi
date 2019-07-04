@@ -92,7 +92,7 @@ impl Query {
       let     delay;
       let     data;
 
-      println!("{}", self);
+      //println!("{}", self);
 
       if self.disabled.unwrap_or(false) {
          return Ok(());
@@ -144,9 +144,9 @@ impl Query {
             result.size      = result.data.len();
             self.result = Some(result);
          },
-         Err(x) => {
-            println!("Server return http {:?} error code", x.status());
-            println!("{:?}", x);
+         Err(_x) => {
+//            println!("Server return http {:?} error code", x.status());
+//           println!("{:?}", x);
          }
       };
       Ok(())
